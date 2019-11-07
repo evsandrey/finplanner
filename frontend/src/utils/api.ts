@@ -33,9 +33,7 @@ export async function registerUser(
   }
 }
 
-export async function loginUser(
-  user: UserLoginRq
-): Promise<UserRs | null> {
+export async function loginUser(user: UserLoginRq): Promise<UserRs | null> {
   try {
     const resp = await API.post("/auth/local", user);
     return resp.data as UserRs;

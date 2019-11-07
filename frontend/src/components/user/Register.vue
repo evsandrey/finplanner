@@ -1,51 +1,64 @@
 <template>
-  <div class="text-center holder">
-    <form class="form-signin">
-      <img
-        class="mb-4"
-        src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-        alt=""
-        width="72"
-        height="72"
-      />
-      <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input
-        type="email"
-        id="inputEmail"
-        class="form-control"
-        placeholder="Email address"
-        v-model="email"
-        required
-        autofocus
-      />
-      <label for="inputUsername" class="sr-only">Email address</label>
-      <input
-        type="text"
-        id="inputUsername"
-        class="form-control"
-        placeholder="Username"
-        v-model="username"
-        required
-      />
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="inputPassword"
-        class="form-control"
-        placeholder="Password"
-        v-model.lazy="password"
-        required
-      />
-      <button
-        class="btn btn-lg btn-primary btn-block"
-        @click.prevent="register"
+  <v-content>
+      <v-container
+        class="fill-height"
+        fluid
       >
-        Register
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2019->></p>
-    </form>
-  </div>
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
+            <v-card class="elevation-12">
+              <v-toolbar
+                color="primary"
+                dark
+                flat
+              >
+                <v-toolbar-title>Register</v-toolbar-title>
+                <v-spacer />
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field
+                    label="Username"
+                    name="username"
+                    v-model="username"
+                    prepend-icon="fas fa-user"
+                    type="text"
+                  />
+                  
+                  <v-text-field
+                    label="Email"
+                    name="email"
+                    v-model="email"
+                    prepend-icon="fas fa-envelope"
+                    type="text"
+                  />
+
+                  <v-text-field
+                    id="password"
+                    label="Password"
+                    name="password"
+                    v-model="password"
+                    prepend-icon="fas fa-lock"
+                    type="password"
+                  />
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn color="primary" @click.prevent="register">Register</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
 </template>
 
 <script lang="ts">

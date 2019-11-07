@@ -1,47 +1,56 @@
 <template>
-  <div class="text-center holder">
-    <form class="form-signin">
-      <img
-        class="mb-4"
-        src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-        alt=""
-        width="72"
-        height="72"
-      />
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input
-        id="inputEmail"
-        class="form-control"
-        placeholder="Email address or username"
-        v-model="identifier"
-        required
-        autofocus
-      />
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="inputPassword"
-        class="form-control"
-        placeholder="Password"
-        v-model="password"
-        required
-      />
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div>
-      <button
-        class="btn btn-lg btn-primary btn-block"
-        type="submit"
-        @click.prevent="login"
+  <v-content>
+      <v-container
+        class="fill-height"
+        fluid
       >
-        Login
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2019->></p>
-    </form>
-  </div>
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
+            <v-card class="elevation-12">
+              <v-toolbar
+                color="primary"
+                dark
+                flat
+              >
+                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-spacer />
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field
+                    label="Login"
+                    name="login"
+                    v-model="identifier"
+                    prepend-icon="fas fa-user"
+                    type="text"
+                  />
+
+                  <v-text-field
+                    id="password"
+                    label="Password"
+                    name="password"
+                    v-model="password"
+                    prepend-icon="fas fa-lock"
+                    type="password"
+                  />
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn color="primary" @click.prevent="login">Login</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
 </template>
 
 <script lang="ts">
@@ -63,8 +72,8 @@ export default class Login extends Vue {
       .then(() => {
         Router.push("/");
       })
-      .catch((e) => {
-        console.error(e)
+      .catch(e => {
+        console.error(e);
       });
   }
 }

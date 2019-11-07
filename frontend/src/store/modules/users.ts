@@ -7,7 +7,13 @@ import {
   Action
 } from "vuex-module-decorators";
 import store from "..";
-import { loginUser, registerUser, updateUser, setJWT, clearJWT } from "@/utils/api";
+import {
+  loginUser,
+  registerUser,
+  updateUser,
+  setJWT,
+  clearJWT
+} from "@/utils/api";
 import { UserProfile, UserLoginRq, UserRegisterRq, UserRs } from "./user";
 
 @Module({
@@ -39,7 +45,7 @@ export class UserModule extends VuexModule {
 
   @Mutation
   setAuth(userRs: UserRs) {
-    console.log("setAuth",userRs)
+    console.log("setAuth", userRs);
     this.profile = userRs.user;
     this.token = userRs.jwt;
     setJWT(userRs.jwt);
@@ -68,7 +74,7 @@ export class UserModule extends VuexModule {
   @Action({ commit: "dropAuth" })
   logout() {
     console.info("cleaning storage");
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
     localStorage.clear();
     console.info("cleaning store");
     console.info("cleaning api");
@@ -83,7 +89,7 @@ export class UserModule extends VuexModule {
 
   @Action({ commit: "setProfile" })
   async checkAuth(token: string) {
-    setJWT(token)
+    setJWT(token);
     this.updateProfile();
   }
 }

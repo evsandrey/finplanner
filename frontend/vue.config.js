@@ -1,9 +1,6 @@
 module.exports = {
-  transpileDependencies: ["vuex-module-decorators"],
-  configureWebpack: {
-    // other webpack options to merge in ...
-  },
-  // devServer Options don't belong into `configureWebpack`
+  transpileDependencies: ["vuex-module-decorators", "vuetify"],
+  configureWebpack: {},
   devServer: {
     host: "0.0.0.0",
     hot: true,

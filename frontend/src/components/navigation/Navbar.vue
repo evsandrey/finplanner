@@ -1,70 +1,51 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarsExampleDefault"
-      aria-controls="navbarsExampleDefault"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <router-link to="/" tag="a" class="nav-link">Home</router-link>
-        </li>
-        <li class="nav-item active">
-          <router-link to="/components" tag="a" class="nav-link">Components</router-link>
-        </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="http://example.com"
-            id="dropdown01"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            >Dropdown</a
-          >
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-      </ul>
-      <form>
-        <router-link v-if="!isLoggedIn" to="login" tag="button" class="btn btn-outline-success my-2 my-sm-0">Login</router-link>
-        <router-link v-if="!isLoggedIn" to="register" tag="button" class="btn btn-outline-success my-2 my-sm-0">Register</router-link>
-        <button v-if="isLoggedIn" class="btn btn-outline-success my-2 my-sm-0" >{{username}}</button>
-        <button v-if="isLoggedIn" class="btn btn-outline-success my-2 my-sm-0" @click.prevent="logOut">Logout</button>
-      </form>
-    </div>
-  </nav>
+  <div>
+    <v-app-bar color="deep-purple accent-4" dark>
+      <v-toolbar-title>App</v-toolbar-title>
+      <v-toolbar-items>
+        <v-btn to="/" text>Home</v-btn>
+        <v-btn to="/components" text>Components</v-btn>
+      </v-toolbar-items>
+      <v-spacer></v-spacer>
+      <v-btn flat v-if="!isLoggedIn" to="login" >Login</v-btn>
+      <v-btn flat v-if="!isLoggedIn" to="register" >Register</v-btn>
+
+      <v-btn flat v-if="isLoggedIn" to="register" exact>{{ username }}</v-btn>
+      <v-btn flat v-if="isLoggedIn" @click.prevent="logOut" exact>{{ username }}</v-btn>
+      <v-menu left bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>fas fa-list</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
+            <v-list-item-title>Option {{ n }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import users from "../../store/modules/users";
-import router from '../../router';
+import router from "../../router";
 
 @Component
 export default class Navbar extends Vue {
-  
   get isLoggedIn() {
-    return users.isTokenized
+    return users.isTokenized;
   }
 
   get username() {
-    return users.username
+    return users.username;
   }
 
-  logOut(){
+  logOut() {
     users.logout();
-    router.push("login")
+    router.push("login");
   }
 }
 </script>

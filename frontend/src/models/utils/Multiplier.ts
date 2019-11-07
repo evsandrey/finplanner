@@ -1,3 +1,1 @@
-export abstract class Multiplier {
-    
-}
+export abstract class Multiplier {}

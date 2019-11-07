@@ -1,4 +1,4 @@
-import TimeConstants from "./TimeConstants"
+import TimeConstants from "./TimeConstants";
 export {};
 
 declare global {
@@ -13,7 +13,7 @@ declare global {
     getStartOfMonth(): Date;
     getDaysInMonth(): number;
     getDayOfMonth(): number;
-    getDaysTillTheEndOfMonth() :number ;
+    getDaysTillTheEndOfMonth(): number;
     // Year
     getDaysInTheYear(): number;
     getDayOfTheYear(): number;
@@ -23,16 +23,11 @@ declare global {
 }
 
 // Month
-Date.prototype.getStartOfMonth = function(): Date  {
-  return new Date(
-    this.getFullYear(),
-    this.getMonth(),
-    1
-  );
+Date.prototype.getStartOfMonth = function(): Date {
+  return new Date(this.getFullYear(), this.getMonth(), 1);
 };
 
-
-Date.prototype.getDaysInMonth = function(): number  {
+Date.prototype.getDaysInMonth = function(): number {
   return new Date(
     this.getFullYear(),
     this.getMonth() + 1,
@@ -40,30 +35,30 @@ Date.prototype.getDaysInMonth = function(): number  {
   ).getDate() as number;
 };
 
-Date.prototype.getDayOfMonth = function(): number  {
+Date.prototype.getDayOfMonth = function(): number {
   return this.getDate();
 };
 
-Date.prototype.getDaysTillTheEndOfMonth = function(): number  {
+Date.prototype.getDaysTillTheEndOfMonth = function(): number {
   return this.getDaysInMonth() - this.getDayOfMonth();
 };
 
 // Year
-Date.prototype.getDaysInTheYear = function(): number  {
+Date.prototype.getDaysInTheYear = function(): number {
   let days: number = this.isLeapYear() ? 366 : 365;
   return days;
 };
 
-Date.prototype.getDayOfTheYear = function(): number  {
+Date.prototype.getDayOfTheYear = function(): number {
   let start = new Date(this.getFullYear(), 0, 0);
   return Math.floor((this.getTime() - start.getTime()) / TimeConstants.DAY);
 };
 
-Date.prototype.getDaysTillTheEndOffYear = function(): number  {
+Date.prototype.getDaysTillTheEndOffYear = function(): number {
   return this.getDaysInTheYear() - this.getDayOfTheYear();
 };
 
-Date.prototype.isLeapYear = function(): boolean  {
+Date.prototype.isLeapYear = function(): boolean {
   let year = this.getFullYear();
   return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
 };
