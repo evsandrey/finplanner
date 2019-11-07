@@ -12,12 +12,10 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
-import Navbar from "./components/Navbar.vue";
+import Navbar from "./components/navigation/Navbar.vue";
 
 @Component({
   components: {
-    HelloWorld,
     Navbar
   }
 })

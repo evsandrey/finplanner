@@ -17,11 +17,8 @@
         <li class="nav-item active">
           <router-link to="/" tag="a" class="nav-link">Home</router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+        <li class="nav-item active">
+          <router-link to="/components" tag="a" class="nav-link">Components</router-link>
         </li>
         <li class="nav-item dropdown">
           <a
@@ -51,8 +48,8 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import users from "../store/modules/users";
-import router from '../router';
+import users from "../../store/modules/users";
+import router from '../../router';
 
 @Component
 export default class Navbar extends Vue {
