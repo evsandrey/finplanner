@@ -1,24 +1,31 @@
 <template>
   <v-app>
-  <div>
-    <Navbar></Navbar>
-    <div id="main">
-      <main role="main" class="container">
-        <div class="starter-template">
+  <Navbar></Navbar>
+  <Loader></Loader>
+  <v-content>
+    <v-container fluid>
+      <v-row 
+       align="center"
+       justify="center" >
+        <spacer></spacer>
+        <v-col cols="8" sm="12" md="8">   
           <router-view></router-view>
-        </div>
-      </main>
-    </div>
-  </div>
+        </v-col>
+        <spacer></spacer>
+      </v-row>
+    </v-container>
+  </v-content>  
   </v-app>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Navbar from "./components/navigation/Navbar.vue";
+import Loader from "./components/navigation/Loader.vue";
 
 @Component({
   components: {
-    Navbar
+    Navbar,
+    Loader
   }
 })
 export default class App extends Vue {}

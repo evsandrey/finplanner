@@ -1,30 +1,33 @@
 <template>
   <div>
     <v-app-bar color="deep-purple accent-4" dark>
-      <v-toolbar-title>App</v-toolbar-title>
+      <v-toolbar-title>SPA app </v-toolbar-title>
       <v-toolbar-items>
         <v-btn to="/" text>Home</v-btn>
         <v-btn to="/components" text>Components</v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
-      <v-btn flat v-if="!isLoggedIn" to="login" >Login</v-btn>
-      <v-btn flat v-if="!isLoggedIn" to="register" >Register</v-btn>
-
-      <v-btn flat v-if="isLoggedIn" to="register" exact>{{ username }}</v-btn>
-      <v-btn flat v-if="isLoggedIn" @click.prevent="logOut" exact>{{ username }}</v-btn>
-      <v-menu left bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>fas fa-list</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <v-toolbar-items>
+        <v-btn v-if="!isLoggedIn" to="login" text>Login</v-btn>
+        <v-btn v-if="!isLoggedIn" to="register" text>Register</v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items>
+        <v-menu v-if="isLoggedIn" left bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" text>
+              <v-icon>fas fa-user</v-icon>
+              {{ username }}
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="logout">
+              <v-list-item-title>
+                <v-btn v-if="isLoggedIn" @click.prevent="logOut" text>logout</v-btn>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
     </v-app-bar>
   </div>
 </template>
