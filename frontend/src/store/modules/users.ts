@@ -30,8 +30,25 @@ export class UserModule extends VuexModule {
     return this.token;
   }
 
+  get isAuthenticated() {
+    return this.token ? true : false;
+  }
+
+  get isAdmin() {
+    if (this.profile != null && this.profile.role.id === 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
   get username() {
     return (this.profile && this.profile.username) || undefined;
+  }
+
+  get profileData() {
+    return this.profile;
   }
 
   get getToken() {
