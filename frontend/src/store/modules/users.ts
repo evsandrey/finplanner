@@ -42,7 +42,6 @@ export class UserModule extends VuexModule {
     }
   }
 
-
   get username() {
     return (this.profile && this.profile.username) || undefined;
   }

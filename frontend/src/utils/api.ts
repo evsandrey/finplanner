@@ -5,36 +5,43 @@ import {
   UserProfile,
   UserRs
 } from "@/store/modules/user.d.ts";
-import loader from '../store/modules/loader'
+import loader from "../store/modules/loader";
 
-
-const apiUrl = process.env.BACK_URL || "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:1337";
+const apiUrl =
+  process.env.BACK_URL ||
+  "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:1337";
 
 export const API = axios.create({
   baseURL: apiUrl
 });
 
-API.interceptors.request.use(function (config) {
-  loader.startThread()
-  return config;
-}, function (error) {
-  loader.endThread()
-  // Do something with request error
-  return Promise.reject(error);
-});
+API.interceptors.request.use(
+  function(config) {
+    loader.startThread();
+    return config;
+  },
+  function(error) {
+    loader.endThread();
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 // Add a response interceptor
-API.interceptors.response.use(function (response) {
-  // Any status code that lie within the range of 2xx cause this function to trigger
-  // Do something with response data
-  loader.endThread()
-  return response;
-}, function (error) {
-  // Any status codes that falls outside the range of 2xx cause this function to trigger
-  // Do something with response error
-  loader.endThread()
-  return Promise.reject(error);
-});
+API.interceptors.response.use(
+  function(response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    loader.endThread();
+    return response;
+  },
+  function(error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    loader.endThread();
+    return Promise.reject(error);
+  }
+);
 
 export function setJWT(jwt: string) {
   API.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;

@@ -3,9 +3,6 @@ import TimeConstants from "./TimeConstants";
 
 export class Month {
   startDate: Date;
-  // in: number;
-  // out: number;
-
   constructor(date: Date) {
     this.startDate = new Date(date.getFullYear(), date.getMonth(), 1);
   }

@@ -3,8 +3,9 @@ import VueRouter, { Route } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../components/user/Login.vue";
 import Register from "../components/user/Register.vue";
+import RequestForm from "../components/request/RequestForm.vue";
 import Components from "../views/Components.vue";
-import users from '../store/modules/users'
+import users from "../store/modules/users";
 
 Vue.use(VueRouter);
 
@@ -18,7 +19,13 @@ const routes = [
     path: "/components",
     name: "components",
     component: Components,
-    meta: { requiresAuth: true , adminAuth:false }
+    meta: { requiresAuth: true, adminAuth: false }
+  },
+  {
+    path: "/newrequest",
+    name: "newrequest",
+    component: RequestForm,
+    meta: { requiresAuth: true, adminAuth: false }
   },
   {
     path: "/login",
@@ -47,30 +54,26 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to: Route, from: any, next: any ) => {
+router.beforeEach((to: Route, from: any, next: any) => {
   if (to.meta.requiresAuth) {
-    const token = users.isAuthenticated
-    console.log('token',token)
-    if(!token) {
-      console.log('tokenFail')
-      next('/login')
-    }
-    else {
-      if(to.meta.adminAuth) {
-        const authUser = users.profileData
-        if( authUser!= null && authUser.role.id === 2)
-          console.log('Im in admin')  
-          next()
+    const token = users.isAuthenticated;
+    console.log("token", token);
+    if (!token) {
+      console.log("tokenFail");
+      next("/login");
+    } else {
+      if (to.meta.adminAuth) {
+        const authUser = users.profileData;
+        if (authUser != null && authUser.role.id === 2)
+          console.log("Im in admin");
+        next();
       } else {
-        next()
+        next();
       }
     }
-  } 
-  else {
-    next()
-  } 
-})
-
-
+  } else {
+    next();
+  }
+});
 
 export default router;

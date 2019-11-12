@@ -1,15 +1,7 @@
 <template>
   <div class="text-center">
-    <v-dialog
-      v-model="loading"
-      hide-overlay
-      persistent
-      width="300"
-    >
-      <v-card
-        color="primary"
-        dark
-      >
+    <v-dialog v-model="loading" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
         <v-card-text>
           Please stand by, data is loading
           <v-progress-linear
@@ -29,9 +21,8 @@ import loader from "../../store/modules/loader";
 
 @Component
 export default class Loader extends Vue {
-  
   get loading() {
-      return loader.isLoading
+    return loader.isLoading;
   }
 }
 </script>

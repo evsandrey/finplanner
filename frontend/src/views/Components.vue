@@ -21,10 +21,9 @@ export default class ComponentTemplate extends Vue {
     new Date(),
     new Date(new Date().getTime() + 1000000000)
   );
-  test(){
-    this.range.getNumberOfDays
+  test() {
+    this.range.getNumberOfDays;
   }
-  
 }
 </script>
 

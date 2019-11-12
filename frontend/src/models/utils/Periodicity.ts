@@ -8,9 +8,6 @@ export enum Period {
 }
 
 export namespace Period {
-  // export function parse(period: string): Period {
-  //     return Period[period];
-  // }
   export function monthly(): Periodicity {
     return new Monthly();
   }

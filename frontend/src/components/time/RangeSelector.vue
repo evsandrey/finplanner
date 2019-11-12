@@ -72,8 +72,8 @@ export default class RangeSelector extends Vue {
   })
   public value!: DateRange;
 
-  menuFrom: boolean = false
-  menuTo: boolean = false
+  menuFrom: boolean = false;
+  menuTo: boolean = false;
 
   get from() {
     return this.value.from.toISOString().substr(0, 10);
@@ -86,7 +86,7 @@ export default class RangeSelector extends Vue {
       this.emitChange(fromDate, this.value.to);
     }
   }
-  
+
   get to() {
     return this.value.to.toISOString().substr(0, 10);
   }
@@ -98,42 +98,38 @@ export default class RangeSelector extends Vue {
       this.emitChange(this.value.from, toDate);
     }
   }
-  
+
   @Emit("input")
   emitChange(fromDate: Date, toDate: Date) {
     const input = new DateRange(fromDate, toDate);
     return input;
   }
-  
+
   get fromFormatted() {
     return this.formatDate(this.from);
   }
-  
+
   get toFormatted() {
     return this.formatDate(this.to);
   }
-  
-  
-  formatDate (dateIso: string) {
-      if (!dateIso) return null
-      const [year, month, day] = dateIso.split('-')
-      return `${day}.${month}.${year}`
+
+  formatDate(dateIso: string) {
+    if (!dateIso) return null;
+    const [year, month, day] = dateIso.split("-");
+    return `${day}.${month}.${year}`;
   }
 
-  parseDate (date: string) {
-    if (!date) return null
-    const [month, day, year] = date.split('/')
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+  parseDate(date: string) {
+    if (!date) return null;
+    const [month, day, year] = date.split("/");
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
   }
 
-  mounted(){
-    this.from = this.value.from.toISOString().substr(0, 10)
-    this.to = this.value.to.toISOString().substr(0, 10)
+  mounted() {
+    this.from = this.value.from.toISOString().substr(0, 10);
+    this.to = this.value.to.toISOString().substr(0, 10);
   }
-
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

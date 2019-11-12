@@ -1,21 +1,13 @@
 <template>
   <v-app>
-  <Navbar></Navbar>
-  <Loader></Loader>
-  <v-content>
-    <v-container fluid>
-      <v-row 
-       align="center"
-       justify="center" >
-        <v-spacer></v-spacer>
-        <v-col cols="8" sm="12" md="8">   
-          <router-view></router-view>
-        </v-col>
-        <v-spacer></v-spacer>
-      </v-row>
-    </v-container>
-  </v-content>
-  <Footer></Footer>  
+    <Navbar></Navbar>
+    <Loader></Loader>
+    <v-content>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+    <Footer></Footer>
   </v-app>
 </template>
 <script lang="ts">

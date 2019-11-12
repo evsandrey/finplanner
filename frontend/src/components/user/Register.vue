@@ -1,64 +1,50 @@
 <template>
   <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col
-            cols="12"
-            sm="8"
-            md="4"
-          >
-            <v-card class="elevation-12">
-              <v-toolbar
-                color="primary"
-                dark
-                flat
-              >
-                <v-toolbar-title>Register</v-toolbar-title>
-                <v-spacer />
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field
-                    label="Username"
-                    name="username"
-                    v-model="username"
-                    prepend-icon="fas fa-user"
-                    type="text"
-                  />
-                  
-                  <v-text-field
-                    label="Email"
-                    name="email"
-                    v-model="email"
-                    prepend-icon="fas fa-envelope"
-                    type="text"
-                  />
+    <v-container class="fill-height" fluid>
+      <v-row align="center" justify="center">
+        <v-col cols="12" sm="8" md="4">
+          <v-card class="elevation-12">
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title>Register</v-toolbar-title>
+              <v-spacer />
+            </v-toolbar>
+            <v-card-text>
+              <v-form>
+                <v-text-field
+                  label="Username"
+                  name="username"
+                  v-model="username"
+                  prepend-icon="fas fa-user"
+                  type="text"
+                />
 
-                  <v-text-field
-                    id="password"
-                    label="Password"
-                    name="password"
-                    v-model="password"
-                    prepend-icon="fas fa-lock"
-                    type="password"
-                  />
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn color="primary" @click.prevent="register">Register</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
+                <v-text-field
+                  label="Email"
+                  name="email"
+                  v-model="email"
+                  prepend-icon="fas fa-envelope"
+                  type="text"
+                />
+
+                <v-text-field
+                  id="password"
+                  label="Password"
+                  name="password"
+                  v-model="password"
+                  prepend-icon="fas fa-lock"
+                  type="password"
+                />
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn color="primary" @click.prevent="register">Register</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script lang="ts">
@@ -100,6 +86,7 @@ export default class MyComponent extends Vue {
 .form-signin {
   width: 100%;
   max-width: 330px;
+  min-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
