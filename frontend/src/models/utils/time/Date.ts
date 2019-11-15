@@ -1,6 +1,5 @@
 import TimeConstants from "./TimeConstants";
 export {};
-
 declare global {
   interface Date {
     // common

@@ -10,14 +10,14 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list dense v-if="!isLoggedIn" >
+      <v-list dense v-if="!isLoggedIn">
         <v-list-item v-for="item in links" :key="item.title" link>
           <v-list-item-content>
             <v-btn :to="item.path" text>{{ item.title }}</v-btn>
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list dense v-if="isLoggedIn" >
+      <v-list dense v-if="isLoggedIn">
         <v-list-item v-for="item in loggedInLinks" :key="item.title" link>
           <v-list-item-content>
             <v-btn :to="item.path" text>{{ item.title }}</v-btn>
@@ -30,19 +30,29 @@
       <!-- BIG SCREEN -->
       <v-toolbar-title class="hidden-sm-and-down">SPA app </v-toolbar-title>
       <v-divider class="mx-4 hidden-sm-and-down" inset vertical></v-divider>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items v-if="!isLoggedIn" class="hidden-sm-and-down">
         <v-btn v-for="item in links" :key="item.title" :to="item.path" text>{{
           item.title
         }}</v-btn>
+      </v-toolbar-items>
+
+      <v-toolbar-items v-if="isLoggedIn" class="hidden-sm-and-down">
+        <v-btn
+          v-for="item in loggedInLinks"
+          :key="item.title"
+          :to="item.path"
+          text
+          >{{ item.title }}</v-btn
+        >
       </v-toolbar-items>
 
       <!-- END OF BIG SCREEN -->
       <!-- SMALL SCREEN -->
       <v-btn
         class="hidden-md-and-up"
-        color="blue-grey"
         fab
         small
+        text
         @click.stop="drawer = !drawer"
       >
         <v-icon dark>fas fa-bars</v-icon>
@@ -60,9 +70,9 @@
         >
       </v-toolbar-items>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn v-if="isLoggedIn" to="/newrequest" text color="red">
+        <v-btn v-if="isLoggedIn" to="/newplan" text color="red">
           <v-icon left>fas fa-plus</v-icon>
-          new request
+          new plan
         </v-btn>
         <v-menu v-if="isLoggedIn" left bottom>
           <template v-slot:activator="{ on }">
@@ -107,9 +117,16 @@
           </v-list>
         </v-menu>
       </v-toolbar-items>
-        <v-btn v-if="!isLoggedIn" class="hidden-md-and-up" to="/login" fab small>
-          <v-icon>fas fa-sign-in-alt</v-icon>
-        </v-btn>
+      <v-btn
+        v-if="!isLoggedIn"
+        class="hidden-md-and-up"
+        to="/login"
+        fab
+        small
+        text
+      >
+        <v-icon>fas fa-sign-in-alt</v-icon>
+      </v-btn>
       <!-- END OF SMALL SCREEN RIGHT PART -->
     </v-app-bar>
   </div>
@@ -126,7 +143,7 @@ export default class Navbar extends Vue {
   public loggedInLinks: object[] = [
     { title: "Home", path: "/" },
     { title: "Components", path: "/components" },
-    { title: "Components", path: "/components" }
+    { title: "Components2", path: "/components" }
   ];
 
   public userLinks: object[] = [

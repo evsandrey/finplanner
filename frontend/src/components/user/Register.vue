@@ -33,12 +33,17 @@
                   v-model="password"
                   prepend-icon="fas fa-lock"
                   type="password"
+                  v-on:keyup.enter="register"
                 />
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-spacer />
-              <v-btn color="primary" @click.prevent="register">Register</v-btn>
+              <v-btn block color="primary" @click.prevent="register"
+                >Register</v-btn
+              >
+            </v-card-actions>
+            <v-card-actions class="justify-center">
+              <v-btn to="/login" text>Login</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>

@@ -1,52 +1,110 @@
 <template>
-  <v-row>
-    <v-col cols="12" sm="6" md="4">
-      <v-menu
-        :value="menuFrom"
-        :close-on-content-click="false"
-        :nudge-right="40"
-        transition="scale-transition"
-        @blur="from = parseDate(dateFormatted)"
-        offset-y
-        min-width="290px"
+  <div>
+    <v-row>
+      <v-col cols="12" sm="6" md="4">
+        <v-menu
+          :value="menuFrom"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          @blur="from = parseDate(dateFormatted)"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="fromFormatted"
+              label="From"
+              prepend-icon="far fa-calendar-alt"
+              readonly
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="from"
+            @input="menuFrom = false"
+          ></v-date-picker>
+        </v-menu>
+      </v-col>
+      <v-spacer></v-spacer>
+      <v-col cols="12" sm="6" md="4">
+        <v-menu
+          :value="menuTo"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          @blur="to = parseDate(dateFormatted)"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="toFormatted"
+              label="To"
+              prepend-icon="far fa-calendar-alt"
+              readonly
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="to" @input="menuTo = false"></v-date-picker>
+        </v-menu>
+      </v-col>
+      <v-spacer></v-spacer>
+    </v-row>
+    <v-row v-if="showSummary">
+      <blockquote class="blockquote">
+        it is {{ value.getNumberOfYears() }} years or
+        {{ value.getNumberOfMonths() }} months or
+        {{ value.getNumberOfDays() }} days
+      </blockquote>
+    </v-row>
+    <v-row v-if="showPreset">
+      <v-btn
+        class="ma-3"
+        @click="
+          value.to = new Date(
+            value.from.getFullYear() + 5,
+            value.from.getMonth(),
+            value.from.getDay()
+          )
+        "
+        >5 years</v-btn
       >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="fromFormatted"
-            label="From"
-            prepend-icon="far fa-calendar-alt"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="from" @input="menuFrom = false"></v-date-picker>
-      </v-menu>
-    </v-col>
-    <v-spacer></v-spacer>
-    <v-col cols="12" sm="6" md="4">
-      <v-menu
-        :value="menuTo"
-        :close-on-content-click="false"
-        :nudge-right="40"
-        transition="scale-transition"
-        @blur="to = parseDate(dateFormatted)"
-        offset-y
-        min-width="290px"
+      <v-btn
+        class="ma-3"
+        @click="
+          value.to = new Date(
+            value.from.getFullYear() + 10,
+            value.from.getMonth(),
+            value.from.getDay()
+          )
+        "
+        >10 years</v-btn
       >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="toFormatted"
-            label="To"
-            prepend-icon="far fa-calendar-alt"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="to" @input="menuTo = false"></v-date-picker>
-      </v-menu>
-    </v-col>
-    <v-spacer></v-spacer>
-  </v-row>
+      <v-btn
+        class="ma-3"
+        @click="
+          value.to = new Date(
+            value.from.getFullYear() + 15,
+            value.from.getMonth(),
+            value.from.getDay()
+          )
+        "
+        >15 years</v-btn
+      >
+      <v-btn
+        class="ma-3"
+        @click="
+          value.to = new Date(
+            value.from.getFullYear() + 20,
+            value.from.getMonth(),
+            value.from.getDay()
+          )
+        "
+        >20 years</v-btn
+      >
+    </v-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -58,7 +116,7 @@ import {
   Watch,
   Vue
 } from "vue-property-decorator";
-import { DateRange } from "../../models/utils/DateRange";
+import { DateRange } from "../../models/utils/time/DateRange";
 
 @Component({
   components: {}
@@ -71,6 +129,18 @@ export default class RangeSelector extends Vue {
     }
   })
   public value!: DateRange;
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  public showSummary!: boolean;
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  public showPreset!: boolean;
 
   menuFrom: boolean = false;
   menuTo: boolean = false;

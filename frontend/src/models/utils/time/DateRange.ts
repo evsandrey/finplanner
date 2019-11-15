@@ -1,6 +1,6 @@
 import "./Date";
 import T from "./TimeConstants";
-import { Periodicity } from "./Periodicity";
+import { Periodicity } from "../Periodicity"; 
 import { Month } from "./Month";
 
 //implements IterableIterator<Month>
@@ -8,7 +8,7 @@ export class DateRange {
   from: Date;
   to: Date;
   monthes: Month[] = [];
-  monthesMap = {};
+  monthesMap: { [key: number]: Month } = {};
 
   private pointer: number = 0;
 
@@ -18,15 +18,15 @@ export class DateRange {
     }
     this.from = from;
     this.to = to;
-    // let tmpMonth: Month = new Month(from);
-    // this.monthes.push(tmpMonth);
-    // this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
-    // tmpMonth = tmpMonth.getNext();
-    // while (tmpMonth.isAfterMonth(to)) {
-    //   this.monthes.push(tmpMonth);
-    //   this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
-    //   tmpMonth = tmpMonth.getNext();
-    // };
+    let tmpMonth: Month = new Month(from);
+    this.monthes.push(tmpMonth);
+    this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
+    tmpMonth = tmpMonth.getNext();
+    while (tmpMonth.isAfterMonth(to)) {
+      this.monthes.push(tmpMonth);
+      this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
+      tmpMonth = tmpMonth.getNext();
+    }
   }
 
   // [Symbol.iterator](): IterableIterator<Month> {
@@ -49,20 +49,23 @@ export class DateRange {
 
   getNumberOfDays(): number {
     let timediff: number = this.to.getTime() - this.from.getTime();
-    return timediff / T.DAY;
+    return Math.round(timediff / T.DAY);
   }
 
   getNumberOfWeeks(): number {
     let timediff: number = this.to.getTime() - this.from.getTime();
-    return timediff / T.WEEK;
+    return Math.round(timediff / T.WEEK);
   }
 
   getNumberOfMonths(): number {
-    return this.monthes.length;
+    let months = (this.to.getFullYear() - this.from.getFullYear()) * 12;
+    months -= this.from.getMonth();
+    months += this.to.getMonth();
+    return months <= 0 ? 0 : months;
   }
 
   getNumberOfYears(): number {
-    return this.monthes.length / 12;
+    return this.to.getFullYear() - this.from.getFullYear();
   }
 
   getNumberOfPeriods(periodicity: Periodicity): number {

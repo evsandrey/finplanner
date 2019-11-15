@@ -6,7 +6,8 @@ module.exports = {
   extends: ["plugin:vue/essential", "@vue/prettier", "@vue/typescript"],
   rules: {
     "no-console": "off",
-    "no-debugger": "off"
+    "no-debugger": "off",
+    "no-inner-declarations": "off"
   },
   parserOptions: {
     parser: "@typescript-eslint/parser"

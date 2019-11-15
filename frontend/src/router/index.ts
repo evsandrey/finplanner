@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../components/user/Login.vue";
 import Register from "../components/user/Register.vue";
 import RequestForm from "../components/request/RequestForm.vue";
+import NewPlan from "../components/plan/NewPlan.vue";
 import Components from "../views/Components.vue";
 import users from "../store/modules/users";
 
@@ -25,6 +26,12 @@ const routes = [
     path: "/newrequest",
     name: "newrequest",
     component: RequestForm,
+    meta: { requiresAuth: true, adminAuth: false }
+  },
+  {
+    path: "/newplan",
+    name: "newplan",
+    component: NewPlan,
     meta: { requiresAuth: true, adminAuth: false }
   },
   {
