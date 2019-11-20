@@ -1,7 +1,17 @@
 import "./Date";
 import T from "./TimeConstants";
-import { Periodicity } from "../Periodicity"; 
+import { Periodicity } from "../Periodicity";
 import { Month } from "./Month";
+
+export namespace DateRangeHelper {
+  export function getNextYear() {
+    let today = new Date();
+    return new DateRange(
+      today,
+      new Date(today.getFullYear() + 1, today.getMonth(), today.getDate())
+    );
+  }
+}
 
 //implements IterableIterator<Month>
 export class DateRange {
@@ -12,21 +22,30 @@ export class DateRange {
 
   private pointer: number = 0;
 
+  setFrom(from: Date): void {
+    this.from = from;
+  }
+  setTo(to: Date): void {
+    this.to = to;
+  }
+
   constructor(from: Date, to: Date) {
     if (to.getTime() < from.getTime()) {
       throw new Error("Start date is later or equal end date");
     }
+    console.log("Creating new range", from, to);
     this.from = from;
     this.to = to;
-    let tmpMonth: Month = new Month(from);
-    this.monthes.push(tmpMonth);
-    this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
-    tmpMonth = tmpMonth.getNext();
-    while (tmpMonth.isAfterMonth(to)) {
-      this.monthes.push(tmpMonth);
-      this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
-      tmpMonth = tmpMonth.getNext();
-    }
+
+    // let tmpMonth: Month = new Month(from);
+    // this.monthes.push(tmpMonth);
+    // this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
+    // tmpMonth = tmpMonth.getNext();
+    // while (tmpMonth.isAfterMonth(to)) {
+    //   this.monthes.push(tmpMonth);
+    //   this.monthesMap[tmpMonth.startDate.getTime()] = tmpMonth;
+    //   tmpMonth = tmpMonth.getNext();
+    // }
   }
 
   // [Symbol.iterator](): IterableIterator<Month> {

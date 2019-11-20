@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Emit, Vue } from "vue-property-decorator";
-import { Change } from "../../models/change/Change";
+import { Change, ChangeHelper } from "../../models/change/Change";
 import { Periodicity } from "../../models/utils/Periodicity";
 
 @Component
@@ -31,7 +31,7 @@ export default class ChangeSelector extends Vue {
   @Prop({
     type: Object as () => Change,
     default: () => {
-      return Change.fromId("percents", 0, Periodicity.yearly());
+      return ChangeHelper.fromStrategy("percents", 10, Periodicity.yearly());
     }
   })
   private value!: Change;

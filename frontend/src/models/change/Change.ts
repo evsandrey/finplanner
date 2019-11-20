@@ -1,23 +1,24 @@
-import { Periodicity }  from "../utils/Periodicity";
-import { DateRanged } from '../interfaces/DateRanged';
-import { Identifiable } from '../interfaces/Identifiable';
-import { DateRange } from "../utils/time/DateRange"
+import { Periodicity } from "../utils/Periodicity";
+import { DateRanged } from "../interfaces/DateRanged";
+import { Identifiable } from "../interfaces/Identifiable";
+import { DateRange } from "../utils/time/DateRange";
 
-export abstract class Change implements DateRanged,Identifiable {
+export abstract class Change implements DateRanged, Identifiable {
   name: string | undefined;
   id: string | undefined;
-  range: DateRange = new DateRange(new Date(),new Date());
+  strategy: string = "percents";
+  range: DateRange = new DateRange(new Date(), new Date());
   changeRate: number = 0;
   changePeriodicity: Periodicity = Periodicity.yearly();
   constructor(changeRate: number, changePeriodicity: Periodicity) {
     this.changeRate = changeRate;
-    this.changePeriodicity = changePeriodicity; 
+    this.changePeriodicity = changePeriodicity;
   }
 }
 
 export namespace ChangeHelper {
   export const aviableChanges: string[] = ["percents", "units"];
-  export function fromId(
+  export function fromStrategy(
     key: string,
     changeRate: number,
     changePeriodicity: Periodicity
@@ -38,7 +39,7 @@ export namespace ChangeHelper {
   ): Change[] {
     let changes: Change[] = [];
     aviableChanges.forEach(e => {
-      changes.push(fromId(e, changeRate, changePeriodicity));
+      changes.push(fromStrategy(e, changeRate, changePeriodicity));
     });
     return changes;
   }

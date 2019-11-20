@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Emit, Vue } from "vue-property-decorator";
-import { Change } from "../../models/change/Change";
+import { Change, ChangeHelper } from "../../models/change/Change";
 import { Periodicity } from "../../models/utils/Periodicity";
 import PeriodicitySelector from "../utility/PeriodicitySelector.vue";
 
@@ -40,7 +40,7 @@ export default class ChangeInput extends Vue {
   @Prop({
     type: Object as () => Change,
     default: () => {
-      return Change.fromId("percents", 0, Periodicity.yearly());
+      return ChangeHelper.fromStrategy("percents", 0, Periodicity.yearly());
     }
   })
   private value!: Change;
@@ -51,24 +51,28 @@ export default class ChangeInput extends Vue {
   })
   private label!: string;
 
-  private strategies = Change.aviableChanges;
+  private strategies = ChangeHelper.aviableChanges;
 
   get rate() {
     return this.value.changeRate;
   }
   set rate(rate: number) {
     this.emitChange(
-      Change.fromId(this.value.id, rate, this.value.changePeriodicity)
+      ChangeHelper.fromStrategy(
+        this.value.strategy,
+        rate,
+        this.value.changePeriodicity
+      )
     );
   }
 
   get strategy() {
-    return this.value.id;
+    return this.value.strategy;
   }
 
   set strategy(strategy: string) {
     this.emitChange(
-      Change.fromId(
+      ChangeHelper.fromStrategy(
         strategy,
         this.value.changeRate,
         this.value.changePeriodicity
@@ -81,7 +85,11 @@ export default class ChangeInput extends Vue {
   }
   set periodicity(periodicity: Periodicity) {
     this.emitChange(
-      Change.fromId(this.value.id, this.value.changeRate, periodicity)
+      ChangeHelper.fromStrategy(
+        this.value.strategy,
+        this.value.changeRate,
+        periodicity
+      )
     );
   }
 

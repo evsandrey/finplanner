@@ -143,7 +143,7 @@ export default class Navbar extends Vue {
   public loggedInLinks: object[] = [
     { title: "Home", path: "/" },
     { title: "Components", path: "/components" },
-    { title: "Components2", path: "/components" }
+    { title: "Gantt", path: "/gantt" }
   ];
 
   public userLinks: object[] = [

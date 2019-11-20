@@ -7,7 +7,6 @@
           :close-on-content-click="false"
           :nudge-right="40"
           transition="scale-transition"
-          @blur="from = parseDate(dateFormatted)"
           offset-y
           min-width="290px"
         >
@@ -33,7 +32,6 @@
           :close-on-content-click="false"
           :nudge-right="40"
           transition="scale-transition"
-          @blur="to = parseDate(dateFormatted)"
           offset-y
           min-width="290px"
         >
@@ -62,10 +60,12 @@
       <v-btn
         class="ma-3"
         @click="
-          value.to = new Date(
-            value.from.getFullYear() + 5,
-            value.from.getMonth(),
-            value.from.getDay()
+          value.setTo(
+            new Date(
+              value.from.getFullYear() + 5,
+              value.from.getMonth(),
+              value.from.getDay()
+            )
           )
         "
         >5 years</v-btn
@@ -73,10 +73,12 @@
       <v-btn
         class="ma-3"
         @click="
-          value.to = new Date(
-            value.from.getFullYear() + 10,
-            value.from.getMonth(),
-            value.from.getDay()
+          value.setTo(
+            new Date(
+              value.from.getFullYear() + 10,
+              value.from.getMonth(),
+              value.from.getDay()
+            )
           )
         "
         >10 years</v-btn
@@ -84,10 +86,12 @@
       <v-btn
         class="ma-3"
         @click="
-          value.to = new Date(
-            value.from.getFullYear() + 15,
-            value.from.getMonth(),
-            value.from.getDay()
+          value.setTo(
+            new Date(
+              value.from.getFullYear() + 15,
+              value.from.getMonth(),
+              value.from.getDay()
+            )
           )
         "
         >15 years</v-btn
@@ -108,16 +112,8 @@
 </template>
 
 <script lang="ts">
-import {
-  Component,
-  Prop,
-  Emit,
-  Model,
-  Watch,
-  Vue
-} from "vue-property-decorator";
+import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import { DateRange } from "../../models/utils/time/DateRange";
-
 @Component({
   components: {}
 })
@@ -129,72 +125,58 @@ export default class RangeSelector extends Vue {
     }
   })
   public value!: DateRange;
-
   @Prop({
     type: Boolean,
     default: false
   })
   public showSummary!: boolean;
-
   @Prop({
     type: Boolean,
     default: false
   })
   public showPreset!: boolean;
-
   menuFrom: boolean = false;
   menuTo: boolean = false;
-
   get from() {
     return this.value.from.toISOString().substr(0, 10);
   }
   set from(from: string) {
     let fromDate: Date = new Date(Date.parse(from));
     if (fromDate.getTime() > this.value.to.getTime()) {
-      this.emitChange(fromDate, fromDate);
+      this.value.setFrom(fromDate);
+      this.value.setTo(fromDate);
     } else {
-      this.emitChange(fromDate, this.value.to);
+      this.value.setFrom(fromDate);
     }
   }
-
   get to() {
     return this.value.to.toISOString().substr(0, 10);
   }
   set to(to: string) {
     let toDate: Date = new Date(Date.parse(to));
     if (toDate.getTime() < this.value.from.getTime()) {
-      this.emitChange(toDate, toDate);
+      this.value.setFrom(toDate);
+      this.value.setTo(toDate);
     } else {
-      this.emitChange(this.value.from, toDate);
+      this.value.setTo(toDate);
     }
   }
-
-  @Emit("input")
-  emitChange(fromDate: Date, toDate: Date) {
-    const input = new DateRange(fromDate, toDate);
-    return input;
-  }
-
   get fromFormatted() {
     return this.formatDate(this.from);
   }
-
   get toFormatted() {
     return this.formatDate(this.to);
   }
-
   formatDate(dateIso: string) {
     if (!dateIso) return null;
     const [year, month, day] = dateIso.split("-");
     return `${day}.${month}.${year}`;
   }
-
   parseDate(date: string) {
     if (!date) return null;
     const [month, day, year] = date.split("/");
     return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
   }
-
   mounted() {
     this.from = this.value.from.toISOString().substr(0, 10);
     this.to = this.value.to.toISOString().substr(0, 10);

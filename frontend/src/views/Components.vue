@@ -3,6 +3,8 @@
     <h1>Components examples:</h1>
     <h2>Range picker:</h2>
     <RangeSelector v-model="range" />
+    <RangeView v-model="range" />
+
     {{ range.getNumberOfDays() }}
 
     <h2>Periodicity picker:</h2>
@@ -30,8 +32,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import RangeSelector from "../components/time/RangeSelector.vue";
-import { DateRange } from "../models/utils/time/DateRange";
+import { DateRange, DateRangeHelper } from "../models/utils/time/DateRange";
 import PeriodicitySelector from "../components/utility/PeriodicitySelector.vue";
+import RangeView from "../components/time/RangeView.vue";
 import CurrencySelector from "../components/utility/CurrencySelector.vue";
 import CashFlowInput from "../components/utility/CashFlowInput.vue";
 import CashInput from "../components/utility/CashInput.vue";
@@ -40,7 +43,7 @@ import { Periodicity } from "../models/utils/Periodicity";
 import { Currency, Currencies } from "../models/basic/Currency";
 import { Cash } from "../models/basic/Cash";
 import { CashFlow } from "../models/basic/CashFlow";
-import { Change } from "../models/change/Change";
+import { Change, ChangeHelper } from "../models/change/Change";
 
 @Component({
   components: {
@@ -49,14 +52,13 @@ import { Change } from "../models/change/Change";
     CurrencySelector,
     CashInput,
     CashFlowInput,
-    ChangeInput
+    ChangeInput,
+    RangeView
   }
 })
 export default class ComponentTemplate extends Vue {
-  range: DateRange = new DateRange(
-    new Date(),
-    new Date(new Date().getTime() + 1000000000)
-  );
+  range: DateRange = DateRangeHelper.getNextYear();
+
   test() {
     this.range.getNumberOfDays;
   }
@@ -67,12 +69,13 @@ export default class ComponentTemplate extends Vue {
 
   cash: Cash = new Cash(0, Currencies.getDefault());
 
-  cashFlow: CashFlow = new CashFlow(
-    new Cash(0, Currencies.getDefault()),
-    Periodicity.monthly()
+  change: Change = ChangeHelper.fromStrategy(
+    "percents",
+    10,
+    Periodicity.yearly()
   );
 
-  change: Change = Change.fromId("percents", 10, Periodicity.yearly());
+  cashFlow: CashFlow = new CashFlow(this.change, Periodicity.monthly());
 }
 </script>
 

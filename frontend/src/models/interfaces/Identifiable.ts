@@ -1,4 +1,4 @@
 export interface Identifiable {
-    name: string | undefined;
-    id: string | undefined;
+  name: string | undefined;
+  id: string | undefined;
 }

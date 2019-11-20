@@ -1,7 +1,17 @@
 import { Periodicity } from "../utils/Periodicity";
 import { Cash } from "./Cash";
-import { Change } from '../change/Change';
-import { Identifiable } from '../interfaces/Identifiable';
+import { Change, ChangeHelper } from "../change/Change";
+import { Identifiable } from "../interfaces/Identifiable";
+
+export class CashFlowsHolder {
+  flows: CashFlow[] = [];
+  addFlow(flow: CashFlow) {
+    this.flows.push(flow);
+  }
+  removeFlow(flow: CashFlow) {
+    throw "Not implemented";
+  }
+}
 
 export class CashFlow implements Identifiable {
   name: string | undefined;
@@ -10,16 +20,21 @@ export class CashFlow implements Identifiable {
   fromChange: Change;
   from: Cash | undefined = undefined;
   to: Cash | undefined = undefined;
-  
-  constructor(fromChange: Change, periodicity: Periodicity, from?: Cash , to?: Cash) {
+
+  constructor(
+    fromChange: Change,
+    periodicity: Periodicity,
+    from?: Cash,
+    to?: Cash
+  ) {
     this.fromChange = fromChange;
     this.periodicity = periodicity;
   }
-  
-  setFrom (from: Cash) {
+
+  setFrom(from: Cash) {
     this.from = from;
   }
-  setTo (to: Cash) {
+  setTo(to: Cash) {
     this.to = to;
   }
 
@@ -29,6 +44,13 @@ export class CashFlow implements Identifiable {
   setId(id: string): void {
     throw new Error("Method not implemented.");
   }
+}
 
-
+export namespace CashFlowHelper {
+  export function getDefault(): CashFlow {
+    return new CashFlow(
+      ChangeHelper.fromStrategy("percent", 10, Periodicity.yearly()),
+      Periodicity.yearly()
+    );
+  }
 }

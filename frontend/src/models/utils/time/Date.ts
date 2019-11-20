@@ -10,6 +10,7 @@ declare global {
     isSameDate(date: Date): boolean;
     // Month
     getStartOfMonth(): Date;
+    isSameMonth(date: Date): boolean;
     getDaysInMonth(): number;
     getDayOfMonth(): number;
     getDaysTillTheEndOfMonth(): number;
@@ -24,6 +25,10 @@ declare global {
 // Month
 Date.prototype.getStartOfMonth = function(): Date {
   return new Date(this.getFullYear(), this.getMonth(), 1);
+};
+
+Date.prototype.isSameMonth = function(date: Date): boolean {
+  return this.getStartOfMonth().getTime() == date.getStartOfMonth().getTime();
 };
 
 Date.prototype.getDaysInMonth = function(): number {

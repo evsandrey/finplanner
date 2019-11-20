@@ -5,6 +5,7 @@ import Login from "../components/user/Login.vue";
 import Register from "../components/user/Register.vue";
 import RequestForm from "../components/request/RequestForm.vue";
 import NewPlan from "../components/plan/NewPlan.vue";
+import Gantt from "../components/gantt/Gantt.vue";
 import Components from "../views/Components.vue";
 import users from "../store/modules/users";
 
@@ -20,6 +21,12 @@ const routes = [
     path: "/components",
     name: "components",
     component: Components,
+    meta: { requiresAuth: true, adminAuth: false }
+  },
+  {
+    path: "/gantt",
+    name: "gantt",
+    component: Gantt,
     meta: { requiresAuth: true, adminAuth: false }
   },
   {

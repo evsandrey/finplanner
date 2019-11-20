@@ -2,8 +2,9 @@ import { DateRange } from "./time/DateRange";
 import TimeConstants from "./time/TimeConstants";
 import { Period } from "./Period";
 
+export type Periods = "monthly" | "quaterly" | "yearly";
+
 export namespace Periodicity {
-  export type Periods = "monthly" | "quaterly" | "yearly";
   export const aviablePeriods: string[] = ["monthly", "quaterly", "yearly"];
 
   export function fromEnum(period: Period): Periodicity {
@@ -11,7 +12,7 @@ export namespace Periodicity {
       case Period.Month:
         return new Monthly();
       case Period.Quater:
-        return new Quaterly(); 
+        return new Quaterly();
       case Period.Year:
         return new Yearly();
     }
@@ -94,5 +95,41 @@ export class Yearly implements Periodicity {
   }
   getPeriodLength(): number {
     return 12;
+  }
+}
+
+export class DayCode {
+  month: number | undefined;
+  day: number;
+  constructor(day: number, month?: number) {
+    this.day = day;
+    this.month = month;
+  }
+  setDay(day: number): void {
+    this.day = day
+  }
+  setMonth(month: number): void {
+    this.month = month
+  }
+}
+
+export class ReleaseDay {
+  dayCode: DayCode;
+  period: Periods;
+  constructor(period: Periods, dayCode: DayCode) {
+    this.dayCode = dayCode;
+    this.period = period;
+  }
+  isToday(date: Date): boolean {
+    let dayOfMonth = date.getDayOfMonth();
+    let month = date.getMonth();
+    switch (this.period) {
+      case "monthly":
+        return dayOfMonth == this.dayCode.day;
+      case "quaterly":
+        throw "not implemented";
+      case "yearly":
+        return dayOfMonth == this.dayCode.day && month == this.dayCode.month;
+    }
   }
 }

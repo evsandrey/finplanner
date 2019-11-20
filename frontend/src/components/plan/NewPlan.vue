@@ -38,9 +38,7 @@
               ></CashFlowInput>
             </v-form>
           </v-col>
-          <v-col cols="12" sm="6"
-            >Description{{ incomeCashFlow }}</v-col
-          >
+          <v-col cols="12" sm="6">Description{{ incomeCashFlow }}</v-col>
         </v-row>
         <v-card-actions>
           <v-btn color="primary" @click="currentStep = 3">Continue</v-btn>
@@ -64,8 +62,9 @@
               ></CashFlowInput>
             </v-form>
           </v-col>
-          <v-col cols="12" sm="6">Description
-            {{outcomeCashFlow}}
+          <v-col cols="12" sm="6"
+            >Description
+            {{ outcomeCashFlow }}
           </v-col>
         </v-row>
         <v-card-actions>
@@ -94,9 +93,10 @@
               ></ChangeInput>
             </v-form>
           </v-col>
-          <v-col cols="12" sm="6">Description
-            {{incomeGrowth}}
-            {{outcomeGrowth}}
+          <v-col cols="12" sm="6"
+            >Description
+            {{ incomeGrowth }}
+            {{ outcomeGrowth }}
           </v-col>
         </v-row>
         <v-card-actions>
@@ -168,8 +168,8 @@ import { DateRange } from "../../models/utils/time/DateRange";
 import { Periodicity } from "../../models/utils/Periodicity";
 import { Currencies } from "../../models/basic/Currency";
 import { Cash } from "../../models/basic/Cash";
-import { CashFlow } from '../../models/basic/CashFlow';
-import { Change } from '../../models/change/Change';
+import { CashFlow } from "../../models/basic/CashFlow";
+import { Change } from "../../models/change/Change";
 
 @Component({
   components: {
@@ -185,22 +185,22 @@ export default class NewPlan extends Vue {
   range: DateRange = new DateRange(new Date(), new Date());
   currentStep: number = 0;
   periodicity: Periodicity = Periodicity.monthly();
-  incomeCashFlow: CashFlow = new CashFlow(new Cash(10, Currencies.getDefault()), Periodicity.monthly());
-  outcomeCashFlow: CashFlow = new CashFlow(new Cash(10, Currencies.getDefault()), Periodicity.monthly());
-  incomeGrowth :Change = Change.fromId("percents",10,Periodicity.yearly());
-  outcomeGrowth :Change = Change.fromId("percents",10,Periodicity.yearly());
-  investGrowth :Change = Change.fromId("percents",10,Periodicity.yearly());
+  // incomeCashFlow: CashFlow = new CashFlow(new Cash(10, Currencies.getDefault()), Periodicity.monthly());
+  // outcomeCashFlow: CashFlow = new CashFlow(new Cash(10, Currencies.getDefault()), Periodicity.monthly());
+  // incomeGrowth :Change = Change.fromId("percents",10,Periodicity.yearly());
+  // outcomeGrowth :Change = Change.fromId("percents",10,Periodicity.yearly());
+  // investGrowth :Change = Change.fromId("percents",10,Periodicity.yearly());
 
-  savings: Cash = new Cash(10, Currencies.getDefault())
+  // savings: Cash = new Cash(10, Currencies.getDefault())
 
-  some() {
-    this.range.to = new Date(
-      this.range.from.getFullYear(),
-      this.range.from.getMonth(),
-      this.range.from.getDay()
-    );
-    this.range.getNumberOfYears;
-  }
+  // some() {
+  //   this.range.to = new Date(
+  //     this.range.from.getFullYear(),
+  //     this.range.from.getMonth(),
+  //     this.range.from.getDay()
+  //   );
+  //   this.range.getNumberOfYears;
+  // }
 }
 </script>
 

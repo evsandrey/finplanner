@@ -1,7 +1,7 @@
-import { Cash } from '../basic/Cash';
+import { Cash } from "../basic/Cash";
 
-export interface HasCash{
-    cash: Cash;
-    addCash(cash: Cash): void;
-    getCash(cash: Cash): void;
+export interface HasCash {
+  cash: Cash;
+  addCash(cash: Cash): void;
+  getCash(cash: Cash): void;
 }

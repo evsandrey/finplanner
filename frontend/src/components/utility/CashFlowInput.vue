@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12" sm="6">
-      <CashInput v-model="cash" :label="label"></CashInput>
+      <ChangeInput v-model="change" :label="label"></ChangeInput>
     </v-col>
     <v-col cols="12" sm="6">
       <v-row>
@@ -16,14 +16,15 @@
 import { Component, Watch, Prop, Emit, Vue } from "vue-property-decorator";
 import { Currency, Currencies } from "../../models/basic/Currency";
 import { Cash } from "../../models/basic/Cash";
-import { CashFlow } from "../../models/basic/CashFlow";
+import { CashFlow, CashFlowHelper } from "../../models/basic/CashFlow";
 import { Periodicity } from "../../models/utils/Periodicity";
-import CashInput from "../utility/CashInput.vue";
+import ChangeInput from "../utility/ChangeInput.vue";
 import PeriodicitySelector from "../utility/PeriodicitySelector.vue";
+import { ChangeHelper, Change } from "../../models/change/Change";
 
 @Component({
   components: {
-    CashInput,
+    ChangeInput,
     PeriodicitySelector
   }
 })
@@ -31,10 +32,7 @@ export default class CashFlowInput extends Vue {
   @Prop({
     type: Object as () => CashFlow,
     default: () => {
-      return new CashFlow(
-        new Cash(10, Currencies.getDefault()),
-        Periodicity.yearly()
-      );
+      return CashFlowHelper.getDefault();
     }
   })
   private value!: CashFlow;
@@ -45,18 +43,18 @@ export default class CashFlowInput extends Vue {
   })
   private label!: string;
 
-  get cash(): Cash {
-    return this.value.cash;
+  get change(): Change {
+    return this.value.fromChange;
   }
-  set cash(cash: Cash) {
-    this.emitChange(new CashFlow(cash, this.value.periodicity));
+  set change(change: Change) {
+    this.emitChange(new CashFlow(change, this.value.periodicity));
   }
 
   get periodicity(): Periodicity {
     return this.value.periodicity;
   }
   set periodicity(periodicity: Periodicity) {
-    this.emitChange(new CashFlow(this.value.cash, periodicity));
+    this.emitChange(new CashFlow(this.value.fromChange, periodicity));
   }
 
   @Emit("input")
