@@ -4,7 +4,7 @@
       color="error"
       :top="true"
       :value="true"  
-      v-for="error in errors" :key="error"
+      v-for="(error,index) in errors" :key="index"
       :timeout="3000"
     >
       {{ error }}

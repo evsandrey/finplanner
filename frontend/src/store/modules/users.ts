@@ -15,7 +15,7 @@ import {
   clearJWT,
   setCSRF
 } from "@/utils/api";
-import { UserProfile, UserLoginRq, UserRegisterRq, UserRs } from "./user";
+import { UserProfileRs, UserLoginRq, UserRegisterRq, UserRs } from "./user";
 
 @Module({
   namespaced: true,
@@ -24,9 +24,9 @@ import { UserProfile, UserLoginRq, UserRegisterRq, UserRs } from "./user";
   dynamic: true
 })
 export class UserModule extends VuexModule {
-  profile: UserProfile | null = null;
+  profile: UserProfileRs | null = null;
   token: string | null = localStorage.getItem("token") || null;
-  csrf: string | null = localStorage.getItem("csrf") || null; 
+  csrf: string | null = localStorage.getItem("csrf") || null;
 
   get isTokenized() {
     return this.token;
@@ -47,7 +47,7 @@ export class UserModule extends VuexModule {
   get username() {
     return (this.profile && this.profile.username) || undefined;
   }
-  
+
   get userId() {
     return (this.profile && this.profile.id) || undefined;
   }
@@ -61,7 +61,7 @@ export class UserModule extends VuexModule {
   }
 
   @Mutation
-  setProfile(userProfile: UserProfile) {
+  setProfile(userProfile: UserProfileRs) {
     this.profile = userProfile;
   }
 
@@ -72,7 +72,7 @@ export class UserModule extends VuexModule {
     this.token = userRs.jwt;
     this.csrf = userRs.csrf;
     setJWT(userRs.jwt);
-    setCSRF(userRs.csrf)
+    setCSRF(userRs.csrf);
     localStorage.setItem("token", userRs.jwt);
     localStorage.setItem("csrf", userRs.csrf);
   }
@@ -96,6 +96,11 @@ export class UserModule extends VuexModule {
     return userRs;
   }
 
+  @Action({ commit: "setAuth" })
+  async refresh(userRs: UserRs) {
+    return userRs;
+  }
+
   @Action({ commit: "dropAuth" })
   logout() {
     localStorage.removeItem("token");
@@ -105,7 +110,7 @@ export class UserModule extends VuexModule {
 
   @Action({ commit: "setProfile" })
   async updateProfile() {
-    const UserProfileRs: UserProfile | null = await updateUser();
+    const UserProfileRs: UserProfileRs | null = await updateUser();
     return UserProfileRs;
   }
 

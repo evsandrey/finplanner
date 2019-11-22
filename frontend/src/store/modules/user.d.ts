@@ -12,10 +12,10 @@ export interface UserLoginRq {
 export interface UserRs {
   csrf: string;
   jwt: string;
-  user: UserProfile;
+  user: UserProfileRs;
 }
 
-export interface UserProfile {
+export interface UserProfileRs {
   id: string;
   username: string;
   email: string;

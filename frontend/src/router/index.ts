@@ -41,17 +41,26 @@ const routes = [
     path: "/post/new",
     name: "newPost",
     meta: { requiresAuth: true, adminAuth: false },
-    component: () => 
-        import( "../components/post/NewPost.vue")
+    component: () => import("../components/post/NewPost.vue")
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/post/:post_id",
+    name: "showPost",
+    component: () => import("../components/post/ShowPost.vue"),
+    props: true
+  },
+  {
+    path: "/post",
+    name: "showPosts",
+    component: () => import("../components/post/ListPosts.vue"),
+    props: true
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    meta: { requiresAuth: true, adminAuth: false },
+    component: () => import("../components/user/EditProfile.vue"),
+    props: true
   }
 ];
 

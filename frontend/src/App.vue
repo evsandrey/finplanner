@@ -5,7 +5,11 @@
     <ErrorHolder></ErrorHolder>
     <v-content>
       <v-container fluid>
-        <router-view></router-view>
+        <v-row align="center" justify="top">
+          <v-col cols="12" sm="12" md="8">
+            <router-view></router-view>
+          </v-col>
+        </v-row>
       </v-container>
     </v-content>
     <Footer></Footer>
