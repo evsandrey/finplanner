@@ -6,13 +6,24 @@ import {
   UserRs
 } from "@/store/modules/user.d.ts";
 import loader from "../store/modules/loader";
+import errorsholder from "../store/modules/errorsholder";
 
 const apiUrl =
   process.env.BACK_URL ||
-  "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:1337";
+  "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:3000/v1/";
 
 export const API = axios.create({
-  baseURL: apiUrl
+  baseURL: apiUrl,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+export const plainAxios = axios.create({
+  baseURL: apiUrl,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 API.interceptors.request.use(
@@ -22,6 +33,7 @@ API.interceptors.request.use(
   },
   function(error) {
     loader.endThread();
+    errorsholder.showError(error)
     // Do something with request error
     return Promise.reject(error);
   }
@@ -36,8 +48,12 @@ API.interceptors.response.use(
     return response;
   },
   function(error) {
+    if (error.response && error.response.config && error.response.status === 401) {
+      // todo: refresh
+    }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    errorsholder.showError(error)
     loader.endThread();
     return Promise.reject(error);
   }
@@ -47,15 +63,24 @@ export function setJWT(jwt: string) {
   API.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 }
 
+export function setCSRF(CSRF: string) {
+  API.defaults.headers.common["X-CSRF-TOKEN"] = CSRF;
+}
+
+
 export function clearJWT() {
   delete API.defaults.headers.common["Authorization"];
+}
+
+export function clearCSRF() {
+  delete API.defaults.headers.common["X-CSRF-TOKEN"];
 }
 
 export async function registerUser(
   user: UserRegisterRq
 ): Promise<UserRs | null> {
   try {
-    const resp = await API.post("/auth/local/register", user);
+    const resp = await API.post("users/signup", user);
     return resp.data as UserRs;
   } catch (error) {
     return null;
@@ -64,7 +89,7 @@ export async function registerUser(
 
 export async function loginUser(user: UserLoginRq): Promise<UserRs | null> {
   try {
-    const resp = await API.post("/auth/local", user);
+    const resp = await API.post("users/signin", user);
     return resp.data as UserRs;
   } catch (error) {
     return null;
@@ -73,9 +98,10 @@ export async function loginUser(user: UserLoginRq): Promise<UserRs | null> {
 
 export async function updateUser(): Promise<UserProfile | null> {
   try {
-    const resp = await API.get("/users/me");
+    const resp = await API.get("users/me");
     return resp.data as UserProfile;
   } catch (error) {
     return null;
   }
 }
+

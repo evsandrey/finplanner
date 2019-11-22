@@ -11,9 +11,9 @@
             <v-card-text>
               <v-form>
                 <v-text-field
-                  label="Login"
-                  name="login"
-                  v-model="identifier"
+                  label="Email" 
+                  name="email"
+                  v-model="email"
                   prepend-icon="fas fa-user"
                   type="text"
                 />
@@ -51,20 +51,20 @@ import Router from "../../router/index";
 
 @Component
 export default class Login extends Vue {
-  identifier: string = "";
+  email: string = "";
   password: string = "";
 
   login() {
     user
       .login({
-        identifier: this.identifier,
+        email: this.email,
         password: this.password
       })
       .then(() => {
         Router.push("/");
       })
       .catch(e => {
-        console.error(e);
+        console.error(e); 
       });
   }
 }

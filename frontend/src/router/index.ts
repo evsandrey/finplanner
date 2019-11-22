@@ -3,9 +3,7 @@ import VueRouter, { Route } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../components/user/Login.vue";
 import Register from "../components/user/Register.vue";
-import RequestForm from "../components/request/RequestForm.vue";
-import NewPlan from "../components/plan/NewPlan.vue";
-import Gantt from "../components/gantt/Gantt.vue";
+import UsersList from "../components/admin/UsersList.vue";
 import Components from "../views/Components.vue";
 import users from "../store/modules/users";
 
@@ -24,22 +22,10 @@ const routes = [
     meta: { requiresAuth: true, adminAuth: false }
   },
   {
-    path: "/gantt",
-    name: "gantt",
-    component: Gantt,
-    meta: { requiresAuth: true, adminAuth: false }
-  },
-  {
-    path: "/newrequest",
-    name: "newrequest",
-    component: RequestForm,
-    meta: { requiresAuth: true, adminAuth: false }
-  },
-  {
-    path: "/newplan",
-    name: "newplan",
-    component: NewPlan,
-    meta: { requiresAuth: true, adminAuth: false }
+    path: "/admin/users",
+    name: "usersList",
+    component: UsersList,
+    meta: { requiresAuth: true, adminAuth: true }
   },
   {
     path: "/login",
@@ -50,6 +36,13 @@ const routes = [
     path: "/register",
     name: "register",
     component: Register
+  },
+  {
+    path: "/post/new",
+    name: "newPost",
+    meta: { requiresAuth: true, adminAuth: false },
+    component: () => 
+        import( "../components/post/NewPost.vue")
   },
   {
     path: "/about",
@@ -71,19 +64,21 @@ const router = new VueRouter({
 router.beforeEach((to: Route, from: any, next: any) => {
   if (to.meta.requiresAuth) {
     const token = users.isAuthenticated;
-    console.log("token", token);
     if (!token) {
       console.log("tokenFail");
       next("/login");
     } else {
       if (to.meta.adminAuth) {
-        const authUser = users.profileData;
-        if (authUser != null && authUser.role.id === 2)
-          console.log("Im in admin");
-        next();
+        if (users.isAdmin) {
+          console.log("Im admin");
+          next();
+        } else {
+          next("/login");
+        }
       } else {
-        next();
+        next();  
       }
+      next()
     }
   } else {
     next();

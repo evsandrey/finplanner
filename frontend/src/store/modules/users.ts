@@ -12,7 +12,8 @@ import {
   registerUser,
   updateUser,
   setJWT,
-  clearJWT
+  clearJWT,
+  setCSRF
 } from "@/utils/api";
 import { UserProfile, UserLoginRq, UserRegisterRq, UserRs } from "./user";
 
@@ -25,6 +26,7 @@ import { UserProfile, UserLoginRq, UserRegisterRq, UserRs } from "./user";
 export class UserModule extends VuexModule {
   profile: UserProfile | null = null;
   token: string | null = localStorage.getItem("token") || null;
+  csrf: string | null = localStorage.getItem("csrf") || null; 
 
   get isTokenized() {
     return this.token;
@@ -35,7 +37,7 @@ export class UserModule extends VuexModule {
   }
 
   get isAdmin() {
-    if (this.profile != null && this.profile.role.id === 2) {
+    if (this.profile != null && this.profile.role === "admin") {
       return true;
     } else {
       return false;
@@ -44,6 +46,10 @@ export class UserModule extends VuexModule {
 
   get username() {
     return (this.profile && this.profile.username) || undefined;
+  }
+  
+  get userId() {
+    return (this.profile && this.profile.id) || undefined;
   }
 
   get profileData() {
@@ -64,15 +70,18 @@ export class UserModule extends VuexModule {
     console.log("setAuth", userRs);
     this.profile = userRs.user;
     this.token = userRs.jwt;
+    this.csrf = userRs.csrf;
     setJWT(userRs.jwt);
+    setCSRF(userRs.csrf)
     localStorage.setItem("token", userRs.jwt);
+    localStorage.setItem("csrf", userRs.csrf);
   }
 
   @Mutation
-  dropAuth(tmp?: boolean) {
-    console.info("mutation");
+  dropAuth() {
     this.profile = null;
     this.token = null;
+    this.csrf = null;
   }
 
   @Action({ commit: "setAuth" })
@@ -89,11 +98,8 @@ export class UserModule extends VuexModule {
 
   @Action({ commit: "dropAuth" })
   logout() {
-    console.info("cleaning storage");
     localStorage.removeItem("token");
     localStorage.clear();
-    console.info("cleaning store");
-    console.info("cleaning api");
     clearJWT();
   }
 

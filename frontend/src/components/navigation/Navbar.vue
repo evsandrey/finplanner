@@ -45,6 +45,15 @@
           >{{ item.title }}</v-btn
         >
       </v-toolbar-items>
+      <v-toolbar-items v-if="isAdmin" class="hidden-sm-and-down">
+        <v-btn
+          v-for="item in adminLinks"
+          :key="item.title"
+          :to="item.path"
+          text
+          >{{ item.title }}</v-btn
+        >
+      </v-toolbar-items>
 
       <!-- END OF BIG SCREEN -->
       <!-- SMALL SCREEN -->
@@ -69,11 +78,8 @@
           >{{ item.title }}</v-btn
         >
       </v-toolbar-items>
+      
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn v-if="isLoggedIn" to="/newplan" text color="red">
-          <v-icon left>fas fa-plus</v-icon>
-          new plan
-        </v-btn>
         <v-menu v-if="isLoggedIn" left bottom>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on" text>
@@ -97,7 +103,7 @@
       <v-toolbar-items v-if="isLoggedIn" class="hidden-md-and-up">
         <v-btn v-if="isLoggedIn" to="/newrequest" text color="red">
           <v-icon left>fas fa-plus</v-icon>
-          new request
+          new something
         </v-btn>
         <v-menu v-if="isLoggedIn" left bottom>
           <template v-slot:activator="{ on }">
@@ -143,7 +149,7 @@ export default class Navbar extends Vue {
   public loggedInLinks: object[] = [
     { title: "Home", path: "/" },
     { title: "Components", path: "/components" },
-    { title: "Gantt", path: "/gantt" }
+    { title: "New post", path: "/post/new" }
   ];
 
   public userLinks: object[] = [
@@ -151,8 +157,16 @@ export default class Navbar extends Vue {
     { title: "login", path: "/login" }
   ];
 
+  public adminLinks: object[] = [
+    { title: "Users List", path: "/admin/users" }
+  ];
+
   get isLoggedIn() {
     return users.isTokenized;
+  }
+  
+  get isAdmin() {
+    return users.isAdmin;
   }
 
   get username() {
