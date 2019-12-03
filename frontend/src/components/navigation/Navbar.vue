@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" fixed temporary>
       <v-list-item v-if="isLoggedIn">
         <v-list-item-avatar>
           <!-- avatar -->
@@ -26,42 +26,70 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="indigo" dark>
+    <v-app-bar color="indigo" fixed dark>
       <!-- BIG SCREEN -->
-      <v-toolbar-title class="hidden-sm-and-down">SPA app</v-toolbar-title>
+      <v-toolbar-title to="/" class="hidden-sm-and-down">eVs</v-toolbar-title>
       <v-divider class="mx-4 hidden-sm-and-down" inset vertical></v-divider>
       <v-toolbar-items v-if="!isLoggedIn" class="hidden-sm-and-down">
         <v-btn v-for="item in links" :key="item.title" :to="item.path" text>
-          {{
-          item.title
-          }}
+          {{ item.title }}
         </v-btn>
       </v-toolbar-items>
 
       <v-toolbar-items v-if="isLoggedIn" class="hidden-sm-and-down">
-        <v-btn v-for="item in loggedInLinks" :key="item.title" :to="item.path" text>{{ item.title }}</v-btn>
+        <v-btn
+          v-for="item in loggedInLinks"
+          :key="item.title"
+          :to="item.path"
+          text
+          >{{ item.title }}</v-btn
+        >
       </v-toolbar-items>
       <v-toolbar-items v-if="isAdmin" class="hidden-sm-and-down">
-        <v-btn v-for="item in adminLinks" :key="item.title" :to="item.path" text>{{ item.title }}</v-btn>
+        <v-btn
+          v-for="item in adminLinks"
+          :key="item.title"
+          :to="item.path"
+          text
+          >{{ item.title }}</v-btn
+        >
       </v-toolbar-items>
 
       <!-- END OF BIG SCREEN -->
       <!-- SMALL SCREEN -->
-      <v-btn class="hidden-md-and-up" fab small text @click.stop="drawer = !drawer">
+      <v-btn
+        class="hidden-md-and-up"
+        fab
+        small
+        text
+        @click.stop="drawer = !drawer"
+      >
         <v-icon dark>fas fa-bars</v-icon>
       </v-btn>
       <!-- END OF SMALL SCREEN -->
       <v-spacer></v-spacer>
       <!-- BIG SCREEN RIGHT PART -->
       <v-toolbar-items v-if="!isLoggedIn" class="hidden-sm-and-down">
-        <v-btn v-for="item in userLinks" :key="item.title" :to="item.path" text>{{ item.title }}</v-btn>
+        <v-btn
+          v-for="item in userLinks"
+          :key="item.title"
+          :to="item.path"
+          text
+          >{{ item.title }}</v-btn
+        >
       </v-toolbar-items>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-menu v-if="isLoggedIn" left bottom>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on" text>
-              <v-icon left>fas fa-user</v-icon>
-              {{ username }}
+              <v-avatar v-if="userAvatar" color="red">
+                <img :src="userAvatar" />
+              </v-avatar>
+              <v-avatar v-if="!userAvatar" color="red">
+                <span class="white--text headline">{{
+                  username.charAt(0)
+                }}</span>
+              </v-avatar>
             </v-btn>
           </template>
           <v-list>
@@ -82,15 +110,21 @@
         <v-menu v-if="isLoggedIn" left bottom>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on" text>
-              <v-icon left>fas fa-user</v-icon>
-              {{ username }}
+              <v-avatar v-if="userAvatar" color="indigo">
+                <img :src="userAvatar" />
+              </v-avatar>
+              <v-avatar v-if="!userAvatar" color="red">
+                <span class="white--text headline">{{
+                  username.charAt(0)
+                }}</span>
+              </v-avatar>
             </v-btn>
           </template>
           <v-list v-if="isLoggedIn">
             <v-list-item v-for="item in userLoggedInLinks" :key="item.title">
               <v-btn :to="item.path" text>{{ item.title }}</v-btn>
             </v-list-item>
-            <v-list-item >
+            <v-list-item>
               <v-list-item-title>
                 <v-btn @click.prevent="logOut" text>logout</v-btn>
               </v-list-item-title>
@@ -98,7 +132,14 @@
           </v-list>
         </v-menu>
       </v-toolbar-items>
-      <v-btn v-if="!isLoggedIn" class="hidden-md-and-up" to="/login" fab small text>
+      <v-btn
+        v-if="!isLoggedIn"
+        class="hidden-md-and-up"
+        to="/login"
+        fab
+        small
+        text
+      >
         <v-icon>fas fa-sign-in-alt</v-icon>
       </v-btn>
       <!-- END OF SMALL SCREEN RIGHT PART -->
@@ -116,9 +157,9 @@ export default class Navbar extends Vue {
   public links: object[] = [{ title: "Home", path: "/" }];
   public loggedInLinks: object[] = [
     { title: "Home", path: "/" },
-    { title: "Components", path: "/components" },
-    { title: "New post", path: "/post/new" },
-    { title: "Posts", path: "/post" }
+    // { title: "Components", path: "/components" },
+    { title: "Posts", path: "/posts" },
+    { title: "New post", path: "/post/new" }
   ];
 
   public userLinks: object[] = [
@@ -127,17 +168,22 @@ export default class Navbar extends Vue {
   ];
 
   public userLoggedInLinks: object[] = [
+    { title: "New post", path: "/post/new" },
     { title: "Edit profile", path: "/profile" }
   ];
 
   public adminLinks: object[] = [{ title: "Users List", path: "/admin/users" }];
 
   get isLoggedIn() {
-    return users.isTokenized;
+    return users.isAuthenticated;
   }
 
   get isAdmin() {
     return users.isAdmin;
+  }
+
+  get userAvatar() {
+    return users.avatar;
   }
 
   get userId() {

@@ -16,7 +16,7 @@ module V1
             render json: { 
               csrf: tokens[:csrf],
               jwt: tokens[:access], 
-              user: user
+              user: user.as_json
             }
           else
             render json: { error: user.errors.full_messages.join(' ') },

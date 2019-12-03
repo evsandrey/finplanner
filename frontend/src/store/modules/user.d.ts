@@ -16,10 +16,12 @@ export interface UserRs {
 }
 
 export interface UserProfileRs {
-  id: string;
+  id: string | number;
   username: string;
   email: string;
   role: Role;
+  avatar_url: string | undefined;
+  avatar: string | Blob | undefined;
 }
 
-export type Role = "user"| "manager" | "admin";
+export type Role = "user" | "manager" | "admin";

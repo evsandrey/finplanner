@@ -15,7 +15,7 @@ module V1
         render json: { 
           csrf: tokens[:csrf],
           jwt: tokens[:access], 
-          user: user
+          user: user.as_json
         }
       end
     end

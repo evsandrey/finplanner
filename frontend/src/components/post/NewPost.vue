@@ -2,14 +2,14 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="12" md="8">
       <PostForm v-model="post"></PostForm>
-      <v-btn @click="save()">Save</v-btn>
+      <v-btn large block color="primary" class="mt-6" @click="save()">Save</v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import { Post } from "./post";
+import { Post,PostHelper } from "./post";
 import { API } from "../../utils/api";
 import Router from "../../router/index";
 import PostForm from "./PostForm.vue";
@@ -21,13 +21,12 @@ import users from "../../store/modules/users";
   }
 })
 export default class NewPost extends Vue {
-  private post: Post = new Post("", "", users.userId);
+  private post: Post = PostHelper.getNew();
 
   save() {
-    API.post("posts", this.post)
-      .then(post => {
-        Router.push("/posts");
-       });
+    API.post("posts", this.post.asSavePostRq()).then(post => {
+      Router.push("/post/" + post.data.id);
+    });
   }
 }
 </script>

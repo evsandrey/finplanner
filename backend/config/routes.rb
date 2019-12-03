@@ -7,8 +7,11 @@ Rails.application.routes.draw do
         post 'signup', controller: :signup, action: :create
         delete 'signin', controller: :signin, action: :destroy      
         get 'me', controller: :user, action: :me
+        post 'update', controller: :user, action: :update_profile
+        post 'reset-password', controller: :password_resets, action: :reset_password
+        post 'update-password', controller: :password_resets, action: :update_password
       end
-      namespace :admin do
+      namespace :admin do 
         get 'users', controller: :admin, action: :index
       end
   end

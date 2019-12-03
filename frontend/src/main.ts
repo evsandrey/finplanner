@@ -5,20 +5,24 @@ import store from "./store";
 import users from "./store/modules/users";
 import { API, setJWT, setCSRF } from "./utils/api";
 import vuetify from "./plugins/vuetify";
+import "./plugins/tiptap-plugin";
 
 Vue.config.productionTip = false;
 
-const token = localStorage.getItem("token");
-const csrf = localStorage.getItem("csrf");
+async function init() {
+  const token = localStorage.getItem("token");
+  const csrf = localStorage.getItem("csrf");
 
-if (csrf) {
-  setCSRF(csrf);
+  if (csrf) {
+    setCSRF(csrf);
+  }
+  if (token) {
+    setJWT(token);
+    await users.updateProfile();
+  }
 }
 
-if (token) {
-  setJWT(token);
-  users.updateProfile();
-}
+init();
 
 new Vue({
   router,

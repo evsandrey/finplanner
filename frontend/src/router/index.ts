@@ -38,6 +38,17 @@ const routes = [
     component: Register
   },
   {
+    path: "/forgot_password",
+    name: "forgot_password",
+    component: () => import("../components/user/ForgotPassword.vue")
+  },
+  {
+    path: '/update_password/:token',
+    name: 'update_password',
+    component: () => import("../components/user/UpdatePassword.vue"),
+    props: true
+  },
+  {
     path: "/post/new",
     name: "newPost",
     meta: { requiresAuth: true, adminAuth: false },
@@ -50,7 +61,13 @@ const routes = [
     props: true
   },
   {
-    path: "/post",
+    path: "/post/:post_id/edit",
+    name: "editPost",
+    component: () => import("../components/post/EditPost.vue"),
+    props: true
+  },
+  {
+    path: "/posts",
     name: "showPosts",
     component: () => import("../components/post/ListPosts.vue"),
     props: true
@@ -72,7 +89,7 @@ const router = new VueRouter({
 
 router.beforeEach((to: Route, from: any, next: any) => {
   if (to.meta.requiresAuth) {
-    const token = users.isAuthenticated;
+    const token = users.isTokenized;
     if (!token) {
       console.log("tokenFail");
       next("/login");
@@ -85,9 +102,9 @@ router.beforeEach((to: Route, from: any, next: any) => {
           next("/login");
         }
       } else {
-        next();  
+        next();
       }
-      next()
+      next();
     }
   } else {
     next();

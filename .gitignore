@@ -2,3 +2,5 @@
 jest.config.js
 package.json
 tsconfig.json
+cert
+backend/storage

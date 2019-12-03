@@ -1,13 +1,13 @@
 <template>
   <v-form>
     <v-text-field v-model="title" label="Title" required></v-text-field>
-    <tiptap-vuetify v-model="text" :extensions="extensions" />
+    <tiptap-vuetify v-model="text" :extensions="extensions" placeholder="Write something …" />
   </v-form>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import { Post } from "./post";
+import { Post, PostHelper } from "./post";
 import { API } from "../../utils/api";
 import Router from "../../router/index";
 
@@ -41,7 +41,7 @@ import {
 export default class PostForm extends Vue {
   @Prop({
     type: Post,
-    default: new Post("", "", "")
+    default: PostHelper.getNew()
   })
   private value!: Post;
 
@@ -85,11 +85,6 @@ export default class PostForm extends Vue {
   }
   set text(text: string) {
     this.value.setText(text);
-  }
-  save() {
-    API.post("posts", this.value).then(post => {
-      Router.push("posts");
-    });
   }
 }
 </script>
