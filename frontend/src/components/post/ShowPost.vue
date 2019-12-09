@@ -1,9 +1,12 @@
 <template>
   <v-row v-if="post" align="center" justify="center">
     <v-col cols="12" sm="12" md="12">
-      <h1>{{ post.title }}<UserPill v-model="user" /><v-btn @click="edit()">edit</v-btn></h1>
+      <h1>
+        {{ post.title }}<v-btn class="float-right" @click="edit()">edit</v-btn>
+      </h1>
       <p v-html="post.text"></p>
     </v-col>
+    <UserPill v-model="user" />
   </v-row>
 </template>
 
@@ -35,9 +38,12 @@ export default class ShowPost extends Vue {
       this.user = new User(resp.data.user as UserProfileRs);
     }
   }
-  edit() { 
-    if(this.post && this.post_id){
-        Router.push({ name: "editPost", params: { post_id: this.post.id as string} });
+  edit() {
+    if (this.post && this.post_id) {
+      Router.push({
+        name: "editPost",
+        params: { post_id: this.post.id as string }
+      });
     }
   }
 }

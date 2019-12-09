@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :v1 do
       resources :posts
+      get 'my-cv', controller: :cv, action: :get_cv
+      resources :jobs
       namespace :users do
         post 'refresh', controller: :refresh, action: :create
         post 'signin', controller: :signin, action: :create

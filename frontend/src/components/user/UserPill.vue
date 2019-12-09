@@ -1,5 +1,5 @@
 <template>
-  <v-chip outlined v-if="value" >
+  <v-chip outlined v-if="value">
     <v-avatar v-if="!hasAvatar" left color="red">
       {{ value.username.charAt(0) }}
     </v-avatar>

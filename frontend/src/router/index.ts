@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { Route } from "vue-router";
 import Home from "../views/Home.vue";
+import About from "../views/About.vue";
 import Login from "../components/user/Login.vue";
 import Register from "../components/user/Register.vue";
 import UsersList from "../components/admin/UsersList.vue";
@@ -14,6 +15,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: About
   },
   {
     path: "/components",
@@ -43,8 +49,8 @@ const routes = [
     component: () => import("../components/user/ForgotPassword.vue")
   },
   {
-    path: '/update_password/:token',
-    name: 'update_password',
+    path: "/update_password/:token",
+    name: "update_password",
     component: () => import("../components/user/UpdatePassword.vue"),
     props: true
   },
@@ -77,6 +83,30 @@ const routes = [
     name: "profile",
     meta: { requiresAuth: true, adminAuth: false },
     component: () => import("../components/user/EditProfile.vue"),
+    props: true
+  },
+  {
+    path: "/jobs/new",
+    name: "newJob",
+    meta: { requiresAuth: true, adminAuth: false },
+    component: () => import("../components/job/NewJob.vue")
+  },
+  // {
+  //   path: "/job/:job_id",
+  //   name: "showJob",
+  //   component: () => import("../components/job/ShowJob.vue"),
+  //   props: true
+  // },
+  {
+    path: "/job/:job_id/edit",
+    name: "editJob",
+    component: () => import("../components/job/EditJob.vue"),
+    props: true
+  },
+  {
+    path: "/jobs",
+    name: "showJobs",
+    component: () => import("../components/job/ListJobs.vue"),
     props: true
   }
 ];

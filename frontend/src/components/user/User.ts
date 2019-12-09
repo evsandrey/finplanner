@@ -1,7 +1,7 @@
 import { UserProfileRs, Role } from "@/store/modules/user";
 
-export namespace UserHelper{
-  export function getNewRs():UserProfileRs {
+export namespace UserHelper {
+  export function getNewRs(): UserProfileRs {
     return {
       id: "string",
       username: "string",
@@ -9,11 +9,9 @@ export namespace UserHelper{
       role: "user",
       avatar_url: undefined,
       avatar: undefined
-    } as UserProfileRs; 
+    } as UserProfileRs;
   }
 }
-
-
 
 export class User {
   id: string | number;

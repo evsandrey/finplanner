@@ -1,7 +1,11 @@
 <template>
   <v-form>
     <v-text-field v-model="title" label="Title" required></v-text-field>
-    <tiptap-vuetify v-model="text" :extensions="extensions" placeholder="Write something …" />
+    <tiptap-vuetify
+      v-model="text"
+      :extensions="extensions"
+      placeholder="Write something …"
+    />
   </v-form>
 </template>
 

@@ -3,10 +3,11 @@
     <v-container class="fill-height" fluid>
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
-          <v-card class="elevation-12">
+          <v-card class="elevation-12 form-signin">
             <v-toolbar color="primary" dark flat>
-              <v-toolbar-title>Register</v-toolbar-title>
-              <v-spacer />
+              <v-spacer></v-spacer>
+              <v-toolbar-title class="white--text">Register</v-toolbar-title>
+              <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
               <v-form>
@@ -46,7 +47,7 @@
               >
             </v-card-actions>
             <v-card-text>
-                <a href="/login">Allready have an account?</a>
+              <a href="/login">Allready have an account?</a>
             </v-card-text>
           </v-card>
         </v-col>
@@ -66,23 +67,21 @@ export default class MyComponent extends Vue {
   email: string = "";
   username: string = "";
   password: string = "";
- 
 
+  usernameRules: Function[] = [
+    (v: string) => !!v || "Name is required",
+    (v: string) => v.length <= 30 || "Name must be less than 30 characters"
+  ];
 
-  usernameRules: Function[] =  [
-        (v: string) => !!v || 'Name is required',
-        (v: string) => v.length <= 30 || 'Name must be less than 30 characters',
-  ]
-  
-  emailRules: Function[] =   [
-        (v: string) => !!v || 'E-mail is required',
-        (v: string) => /.+@.+/.test(v) || 'E-mail must be valid',
-  ]
+  emailRules: Function[] = [
+    (v: string) => !!v || "E-mail is required",
+    (v: string) => /.+@.+/.test(v) || "E-mail must be valid"
+  ];
 
-  passwordRules: Function[] =   [
-        (v: string) => !!v || 'Password is required',
-        (v: string) => v.length >= 6 || 'Password must be more than 6 characters',
-  ]
+  passwordRules: Function[] = [
+    (v: string) => !!v || "Password is required",
+    (v: string) => v.length >= 6 || "Password must be more than 6 characters"
+  ];
 
   register() {
     user
@@ -119,8 +118,6 @@ export default class MyComponent extends Vue {
 .form-signin {
   width: 100%;
   max-width: 330px;
-  min-width: 330px;
-  padding: 15px;
   margin: 0 auto;
 }
 .form-signin .checkbox {

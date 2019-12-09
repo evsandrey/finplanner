@@ -43,7 +43,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import user from "../../store/modules/users";
 import Router from "../../router/index";
 import users from "../../store/modules/users";
-import { updatePass } from '../../utils/api';
+import { updatePass } from "../../utils/api";
 
 @Component
 export default class UpdatePassword extends Vue {
@@ -51,13 +51,11 @@ export default class UpdatePassword extends Vue {
   private token!: string;
   password: string = "";
   completed: boolean = false;
-  
+
   reset() {
-    updatePass(this.password, this.token).then(
-      (resp) => {
-        this.completed = true;
-      }
-    );
+    updatePass(this.password, this.token).then(resp => {
+      this.completed = true;
+    });
   }
 
   created() {

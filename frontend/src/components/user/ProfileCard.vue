@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <div class="spacer"></div>
-    <v-card class="user-card mx-auto" :elevation="8" >
+    <v-card class="user-card mx-auto" :elevation="8">
       <div class="spacer"></div>
       <v-avatar v-if="hasAvatar" size="150" class="avatar_moved" :elevation="8">
         <img :src="avatar_src" alt="Avatar" />

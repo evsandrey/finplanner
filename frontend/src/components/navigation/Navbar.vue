@@ -11,7 +11,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense v-if="!isLoggedIn">
-        <v-list-item v-for="item in links" :key="item.title" link>
+        <v-list-item v-for="item in guestLinks" :key="item.title" link>
           <v-list-item-content>
             <v-btn :to="item.path" text>{{ item.title }}</v-btn>
           </v-list-item-content>
@@ -26,12 +26,17 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="indigo" fixed dark>
+    <v-app-bar color="indigo" app dense fixed dark>
       <!-- BIG SCREEN -->
       <v-toolbar-title to="/" class="hidden-sm-and-down">eVs</v-toolbar-title>
       <v-divider class="mx-4 hidden-sm-and-down" inset vertical></v-divider>
       <v-toolbar-items v-if="!isLoggedIn" class="hidden-sm-and-down">
-        <v-btn v-for="item in links" :key="item.title" :to="item.path" text>
+        <v-btn
+          v-for="item in guestLinks"
+          :key="item.title"
+          :to="item.path"
+          text
+        >
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
@@ -154,12 +159,17 @@ import router from "../../router";
 @Component
 export default class Navbar extends Vue {
   public drawer: boolean = false;
-  public links: object[] = [{ title: "Home", path: "/" }];
+  public guestLinks: object[] = [
+    { title: "Home", path: "/" },
+    { title: "Posts", path: "/posts" },
+    { title: "About me", path: "/about" }
+  ];
   public loggedInLinks: object[] = [
     { title: "Home", path: "/" },
     // { title: "Components", path: "/components" },
     { title: "Posts", path: "/posts" },
-    { title: "New post", path: "/post/new" }
+    { title: "New post", path: "/post/new" },
+    { title: "About me", path: "/about" }
   ];
 
   public userLinks: object[] = [
@@ -169,6 +179,8 @@ export default class Navbar extends Vue {
 
   public userLoggedInLinks: object[] = [
     { title: "New post", path: "/post/new" },
+    { title: "New job", path: "/jobs/new" },
+    { title: "My jobs", path: "/jobs" },
     { title: "Edit profile", path: "/profile" }
   ];
 

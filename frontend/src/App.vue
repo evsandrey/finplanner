@@ -3,13 +3,9 @@
     <Navbar></Navbar>
     <Loader></Loader>
     <ErrorHolder></ErrorHolder>
-    <v-content class="mt-10">
-      <v-container fluid>
-        <v-row align="center" justify="center">
-          <v-col cols="12" sm="12" md="8">
-            <router-view></router-view>
-          </v-col>
-        </v-row>
+    <v-content>
+      <v-container fluid class="pa-0 ma-0">
+        <router-view></router-view>
       </v-container>
     </v-content>
     <Footer></Footer>

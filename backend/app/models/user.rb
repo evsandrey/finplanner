@@ -3,6 +3,7 @@ class User < ApplicationRecord
    has_one_attached :avatar
    
    has_many :posts
+   has_many :jobs
 
    enum role: %i[user manager admin].freeze
    
@@ -20,9 +21,17 @@ class User < ApplicationRecord
        end
    end
 
-   def as_json
-      super(only: [:id, :username, :email, :role], methods: :avatar_url)
+   def attributes
+    { id: id, email: email, role: role, avatar_url: :avatar_url }
    end
+
+   def as_cv
+    self.as_json( include: [ :jobs ] )
+   end
+
+  #  def as_json()
+  #     super(only: [:id, :username, :email, :role ], methods: :avatar_url)
+  #  end
 
    def generate_password_token!
       begin

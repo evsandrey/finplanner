@@ -1,7 +1,7 @@
 <template>
   <v-row align="center" justify="center">
     <v-col cols="12" sm="12" md="8">
-      <PostForm v-model="post"></PostForm>
+      <JobForm v-model="job"></JobForm>
       <v-btn large block color="primary" class="mt-6" @click="save()"
         >Save</v-btn
       >
@@ -11,23 +11,23 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import { Post, PostHelper } from "./post";
+import { Job, JobHelper } from "./Job";
 import { API } from "../../utils/api";
 import Router from "../../router/index";
-import PostForm from "./PostForm.vue";
+import JobForm from "./JobForm.vue";
 import users from "../../store/modules/users";
 
 @Component({
   components: {
-    PostForm
+    JobForm
   }
 })
-export default class NewPost extends Vue {
-  private post: Post = PostHelper.getNew();
+export default class NewJob extends Vue {
+  private job: Job = JobHelper.getNew();
 
   save() {
-    API.post("posts", this.post.asSavePostRq()).then(post => {
-      Router.push("/post/" + post.data.id);
+    API.post("jobs", this.job).then(post => {
+      //    Router.push("/post/" + post.data.id);
     });
   }
 }

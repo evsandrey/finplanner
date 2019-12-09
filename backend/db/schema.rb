@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_082442) do
+ActiveRecord::Schema.define(version: 2019_12_04_062319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,21 @@ ActiveRecord::Schema.define(version: 2019_12_02_082442) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.datetime "join_date"
+    t.datetime "quit_date"
+    t.string "position"
+    t.string "company"
+    t.string "company_url"
+    t.text "description"
+    t.text "exp"
+    t.text "technologies"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "text"
@@ -58,5 +73,6 @@ ActiveRecord::Schema.define(version: 2019_12_02_082442) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "jobs", "users"
   add_foreign_key "posts", "users"
 end

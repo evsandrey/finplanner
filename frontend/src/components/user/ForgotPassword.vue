@@ -41,19 +41,17 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import user from "../../store/modules/users";
 import Router from "../../router/index";
 import users from "../../store/modules/users";
-import { resetPass } from '../../utils/api';
+import { resetPass } from "../../utils/api";
 
 @Component
 export default class Login extends Vue {
   email: string = "";
   completed: boolean = false;
-  
+
   reset() {
-    resetPass(this.email).then(
-      (resp) => {
-        this.completed = true;
-      }
-    );
+    resetPass(this.email).then(resp => {
+      this.completed = true;
+    });
   }
 
   created() {

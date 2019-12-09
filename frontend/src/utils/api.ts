@@ -10,7 +10,9 @@ import errorsholder from "../store/modules/errorsholder";
 import users from "../store/modules/users";
 import Router from "../router/index";
 
-const apiUrl =  process.env.BACK_URL ||  "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:3000/v1/";
+const apiUrl =
+  process.env.BACK_URL ||
+  "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:3000/v1/";
 // const apiUrl =  process.env.BACK_URL ||  "https://andrey.evsikov.me/v1/";
 
 export const API = axios.create({
@@ -83,7 +85,7 @@ API.interceptors.response.use(
     } else {
       errorsholder.showError(error);
     }
-    
+
     loader.endThread();
     return Promise.reject(error);
   }
@@ -116,25 +118,29 @@ export async function registerUser(
   }
 }
 
-export async function resetPass(email: string): Promise< any | null> {
+export async function resetPass(email: string): Promise<any | null> {
   try {
-    const resp = await API.post('users/reset-password', { email: email });
-    return resp.data
+    const resp = await API.post("users/reset-password", { email: email });
+    return resp.data;
   } catch (error) {
     return null;
   }
 }
 
-export async function updatePass(password: string, token: string): Promise< any | null> {
+export async function updatePass(
+  password: string,
+  token: string
+): Promise<any | null> {
   try {
-    const resp = await API.post('users/update-password', { password: password, token: token });
-    return resp.data
+    const resp = await API.post("users/update-password", {
+      password: password,
+      token: token
+    });
+    return resp.data;
   } catch (error) {
     return null;
   }
 }
-
-
 
 export async function loginUser(user: UserLoginRq): Promise<UserRs | null> {
   try {

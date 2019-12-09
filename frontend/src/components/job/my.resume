@@ -1,0 +1,175 @@
+SUMMARY
+Total of 10 years’ experience in design, architecture and development of software test automation solutions based on software development/release requirements of web-based, desktop and client server applications as an Automation Test Engineer and as a Manual Tester in domains of finance, banking and OS virtualization in enterprises and startups. A basic knowledge of programming and web technologies. Strong Scripting skills (especially nix based) and other programming language experience like Java/C#. Excellent planning and organization skills, with a commitment to delivering on aggressive deadlines. A self-starter who delivers high quality work and can adapt to new challenges, either on their own or as part of a team. A strong desire to learn and develop problem solving skills. Strong understanding and experience working with Object Repository. A strong understanding of web applications and related architecture, specifically client side MVC and RESTful services.
+
+Experience
+Running up to 1000 end-to-end UI tests on daily basis.
+Running up to 3000 REST API tests on CI/CD pipline stages.
+Development of test reports repository with web UI, custom analizing tools and integrations with in-house and market reporting tools
+Testing on stands with more than 4000 servers
+Integrating tests to custom CI/CD pipelines
+Expertise in Entire Software Development Life Cycle (SDLC) and Software Testing Life Cycle (STLC) in Agile as well as Iterative development environments(Waterfall).
+Expertise in different types of testing like Automation testing, Manual testing, Integration testing, System testing, Smoke testing, Regression testing, Performance testing, Functional testing, Database testing, GUI testing, Web / UI and User Acceptance Testing.
+Conversant in developing Test scenarios, Test cases, Test data, Test procedures, Test reports and documenting Manual and Automation Tests.
+Experience in implementing different automation development efforts in Agile/Scrum or Waterfall development environments.
+Involved in design and implementation of Selenium WebDriver Automation Framework for Smoke test and Regression test using TestNG.
+Experience with Cross-Browser and Compatibility Testing using Selenium Grid and TestNG to test whether the web applications are working as desired in different browsers and environments.
+Experience in testing the application web services using SoapUI.
+Developed Test Scripts to implement Test Cases, Test Scenarios, and features for BDD (Behavior Driven Development), TDD (Test Driven Development) using Cucumber.
+Performed Continuous Integration of code and scripts using Jenkins and triggered the Continuous Delivery process using Jenkins build jobs.
+Effectively involved in Defects logging, tracking and managing Defect Life Cycles using HP Quality Center and JIRA.
+Reviewed Application and Test logs, program outputs and reports to identify program processing errors and defects.
+Maintained Selenium & JAVA automation code and resource in git(GitLab,Bitbucket), over the time for improvements and new features.
+Experience in Database/Backend testing using SQL Queries for data design, data validation and data integrity testing.
+Well conversant with the implementation from scratch and practical hands on experience in different types of frameworks like Data Driven, Hybrid and Page Object Model (POM).
+Experience with Cross-Browser and Compatibility Testing to test whether the web applications are working as desired in different browsers and environments.
+Experience in Parallel Execution of Multiple Tests at a time in different environments.
+Proficiency in testing complex software applications including manual testing.
+
+PROFESSIONAL EXPERIENCE:
+Senior QA Expert
+at SberTech in Moscow office
+
+6.2017 - 12.2019
+
+2 years, 6 months
+
+Regular activities:
+
+Involved in various meetings with multiple stakeholders(up to 12 departments) business analysts and developers.
+
+Created automation test scripts using data Driven framework and Page Factory model to test the web applications using Selenium WebDriver with JAVA and maven.
+
+Expertise in using SeleniumGrid and Selenoid to run test scripts on different platforms and against different browsers in parallel to decrease pipline time.
+
+Expertise in writing API(REST) tests with "flexible" contracts.
+
+Used Jenkins to execute the test scripts periodically for very complicated scenarios excluded from running in pipline.
+
+Expertise in grouping of Test suites, Test cases and Test Methods for Regression and Functional Testing using TestNG and Junit annotations.
+
+Involved in the usage and developing of BDD framework to Develop Cucumber Step Definitions, Scenarios and Features using acceptance criteria.
+
+Involved in usage and developing DevOps pipeline with 4 stages and 4000 deployment units(vm`s, baremetal servers and proprietary machines)
+
+Handled Selenium Synchronization problems using Explicit & Implicit waits during regression testing.
+
+Experience in writing complex XPATH using following and preceding and using functions like contains and not contains.
+
+Used runner classes in cucumber to generate step definition and used tags to run different kinds of test suites like smoke, health check and regression.
+
+Shared Daily Status Reports with all the team members, Team Leads, Managers
+
+Products tested:
+
+Back-end microservices platform for SberbankOnline - #1 banking in Russia.(67.8 mln. active users)
+
+Distributed session cache for all frontend projects.
+
+Some of business services for end users(Debit cards, Car loans) for SberbankOnline.
+
+Senior Software Ddevelopment Engineer Test
+at Epicor Software Corporation in Moscow office
+
+4.2014 - 1.2018
+
+3 years, 9 months
+
+Составление и прохождение тестинг-планов. Верификация/воспроизведение/исследование багов. + различные "investigation" таски. 
+
+Автоматизация тестовых сценариев(С#,VB,Selenium(C#)) 
+
+2 продукта в тестировании: 
+- iScala(ERP) (Desktop,Client-Server) 
+- Epicor(ERP) (Desktop,Client-Server, Web ). 
+
+Разработка тестового фреймворка(C# + Selenium Webdriver + in-house solution); 
+
+Разработка системы автоматического запуска и репозитория результатов тестов (Ruby on Rails, REST-like API); Хранение результатов тестов, полу-автоматический разбор и анализ. 
+
+Поддержка старого in-house решения (Test player/recorder,VB); 
+
+Интеграция тестовой инфраструктуры в CI (2 in-house баг-трекера и TFS); 
+
+Проект по миграции(переиспользованию) автотестов с Desktop на Web интерфейс(1200 test suites); 
+
+Поддержка автотестовой инфраструктуры и сопутствующих процессов(vmvare,Hyper-v,deployment,cleanup).
+
+Products tested:
+
+Epicor ERP - ERP solution built for manufacturing growth.
+
+iScala - end-to-end suite of proven business solutions for small to midmarket enterprises
+
+QA Engineer
+at Parallels(Virtuozzo) in Moscow office
+
+6.2010 - 11.2012
+
+2 years, 5 months
+
+Regular activities:
+
+Create test plans and perform planning activities
+
+Execute tests based on provided test cases
+
+Provide feedback and report results of testing to management and stakeholders
+
+Effectively use test management tool to maintain and execute test scripts
+
+Perform functional and regression testing
+
+Communicate regularly with the team and provide reports on own test results
+
+Exposure to test management tools (e.g. JIRA, TC)
+
+Small outsourced teams management (up to 10 members)
+
+Involved in various meetings with Business analysts and developers.
+
+Products tested:
+
+Virtuozzo Containers (Windows,*n(u|i)x) - a single operating system kernel can support multiple isolated virtualized instances instead of just one. From an end user standpoint, these instances, called Containers, look and feel like a real server. This approach provides a common, secure virtualization layer that allocates a single set of system resources across all Containers. The result: a leaner, more efficient virtualization layer with bare-metal performance.
+
+Virtuozzo Infrastructure Platform - out-of-box cloud solution.
+
+Virtuozzo Storage - High performance DFS with faster speeds than Ceph and other alternatives.
+
+Parallels Desktop - VM for Mac OS
+
+Freelance
+at freelance.ru in Moscow office
+
+6.2009 - 7.2010
+
+1 year, 1 month
+
+Managing/Administration clients servers.
+
+External security audit of web applications
+
+Simple servers configuration.
+
+HTML,CSS,JavaScript activities.
+
+Hosting Support Team Lead
+at MediaSoftExpert in Moscow office
+
+6.2007 - 7.2009
+
+2 years, 1 month
+
+Regular activities:
+
+Team management
+
+Billing management, responsible for trouble shooting and debugging minor program bugs.
+
+Clients issues troubleshooting
+
+Infrastructure management
+
+Responsible for modifying the existing programs with improvement
+
+Done other duties as assigned.
+

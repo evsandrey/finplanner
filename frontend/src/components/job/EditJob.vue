@@ -1,9 +1,9 @@
 <template>
-  <v-row v-if="post" align="center" justify="center">
-    <v-col cols="12" sm="12" md="12">
-      <PostForm v-model="post"></PostForm>
+  <v-row v-if="loaded" align="center" justify="center">
+    <v-col cols="12" sm="12" md="8">
+      <JobForm v-model="job"></JobForm>
       <v-btn large block color="primary" class="mt-6" @click="update()"
-        >Update</v-btn
+        >Save</v-btn
       >
       <v-btn large block color="error" class="mt-6" @click="remove()"
         >Delete</v-btn
@@ -14,41 +14,44 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import { Post, PostHelper, PostRs } from "./post";
+import { Job, JobHelper, JobRs } from "./Job";
 import { API } from "../../utils/api";
 import Router from "../../router/index";
-import PostForm from "./PostForm.vue";
+import JobForm from "./JobForm.vue";
 import users from "../../store/modules/users";
 
 @Component({
   components: {
-    PostForm
+    JobForm
   }
 })
-export default class EditPost extends Vue {
+export default class NewJob extends Vue {
   @Prop({ type: Number, default: 0 })
-  private post_id!: number;
+  private job_id!: number;
 
-  private post: Post | null = null;
+  private job: Job | null = null;
+
+  loaded: boolean = false;
 
   async created() {
-    const resp = await API.get(`posts/${this.post_id}`);
+    const resp = await API.get(`jobs/${this.job_id}`);
     if (resp.data) {
-      this.post = new Post(resp.data as PostRs);
+      this.job = new Job(resp.data as JobRs);
+      this.loaded = true;
     }
   }
 
   update() {
-    if (this.post)
-      API.put(`posts/${this.post_id}`, this.post.asSavePostRq()).then(post => {
-        Router.push("/post/" + post.data.id);
+    if (this.job)
+      API.put(`jobs/${this.job_id}`, this.job).then(job => {
+        Router.push("/job/" + job.data.id);
       });
   }
 
   remove() {
-    if (this.post)
-      API.delete(`posts/${this.post_id}`).then(post => {
-        Router.push("/posts");
+    if (this.job)
+      API.delete(`jobs/${this.job_id}`).then(job => {
+        Router.push("/jobs");
       });
   }
 }

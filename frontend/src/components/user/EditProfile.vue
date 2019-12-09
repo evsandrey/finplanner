@@ -1,10 +1,10 @@
 <template>
   <v-row v-if="user">
     <v-col cols="12" sm="6">
-      <v-container fluid >
-        <v-layout column >
+      <v-container fluid>
+        <v-layout column>
           <div class="spacer"></div>
-          <v-card> 
+          <v-card>
             <v-card-text class="justify-center">
               <v-avatar
                 v-if="hasAvatar"
@@ -120,7 +120,6 @@
       <div class="text-center">
         <UserPill v-model="user"></UserPill>
       </div>
-      
     </v-col>
   </v-row>
 </template>
@@ -183,7 +182,7 @@ export default class EditProfile extends Vue {
     img.toBlob(
       (blob: Blob) => {
         console.log("setting blob");
-        if (this.user) this.user.setAvatar(blob) ;
+        if (this.user) this.user.setAvatar(blob);
         if (this.user) this.user = this.user.clone();
         this.dialog = false;
       },
