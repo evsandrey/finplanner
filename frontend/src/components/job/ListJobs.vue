@@ -69,6 +69,13 @@ export default class ListJobs extends Vue {
   edit(job_id: string) {
     Router.push({ name: "editJob", params: { job_id: job_id } });
   }
+
+  humanize(date1: Date, date2: Date){
+    return this.humanizer.humanize(date1.getTime() - date2.getTime(), {
+                units: ["y", "mo"],
+                round: true
+    })
+  }
   // async created() {
   //   if (!this.jobs) {
   //     const resp = await API.get(`jobs/`);

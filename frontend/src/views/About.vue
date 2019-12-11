@@ -121,7 +121,7 @@ import { UserProfileRs } from '../store/modules/user'
 import { Job, JobHelper, JobRs } from "../components/job/Job";
 import ListJobs from "../components/job/ListJobs.vue";
 import users from "../store/modules/users";
-import { API } from "../utils/api";
+import { API, apiUrl } from "../utils/api";
 import ProfileCard from "../components/user/ProfileCard.vue";
 import {
   HumanizeDurationLanguage,
@@ -262,11 +262,17 @@ export default class About extends Vue {
     return date.getMonth() + 1 + "." + date.getFullYear();
   }
 
-  async created() {
-    const resp = await API.get(`my-cv/`);
-    this.user = new User(resp.data as UserProfileRs);
-    this.jobs = JobHelper.fromRespArr(resp.data.jobs.sort(this.sortFunction) as JobRs[]);
-    this.loaded = true;
+  created() {
+    // const resp = await API.get(`my-cv/`);
+    var request = new XMLHttpRequest();
+    request.open('GET', apiUrl+'my-cv', false);  // `false` makes the request synchronous
+    request.send(null);
+    if (request.status === 200 && request.responseText) {
+      console.log(request.response);
+      this.user = new User(JSON.parse(request.response) as UserProfileRs);
+      this.jobs = JobHelper.fromRespArr(JSON.parse(request.response).jobs.sort(this.sortFunction) as JobRs[]);
+      this.loaded = true;
+    }
   }
 
   sortFunction(a: JobRs,b: JobRs){  

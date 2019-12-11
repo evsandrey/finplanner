@@ -10,7 +10,7 @@ import errorsholder from "../store/modules/errorsholder";
 import users from "../store/modules/users";
 import Router from "../router/index";
 
-const apiUrl =
+export const apiUrl =
   process.env.BACK_URL ||
   "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:3000/v1/";
 // const apiUrl =  process.env.BACK_URL ||  "https://andrey.evsikov.me/v1/";
