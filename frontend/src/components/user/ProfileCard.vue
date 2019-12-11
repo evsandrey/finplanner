@@ -1,63 +1,61 @@
 <template>
   <v-container fluid>
-        <v-layout column>
-            <v-card>
-                <v-card-text>
-                    <v-flex class="mb-4">
-                        <v-avatar size="96" class="mr-4">
-                            <img :src="'/avatars/avatar_' + (form.avatar.toLowerCase()) + '.png'" alt="Avatar">
-                        </v-avatar>
-                        <v-btn @click="openAvatarPicker">Change Avatar</v-btn>
-                    </v-flex>
-                    <v-text-field
-                        v-model="form.firstName"
-                        label="FirstName"></v-text-field>
-                    <v-text-field
-                        v-model="form.lastName"
-                        label="Last Name"></v-text-field>
-                    <v-text-field
-                        v-model="user.email"
-                        label="Email Address"></v-text-field>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn color="primary" :loading="loading" @click.native="update">
-                        <v-icon left dark>check</v-icon>
-                        Save Changes
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-layout>
-    </v-container>
+    <div class="spacer"></div>
+    <v-card class="user-card mx-auto" :elevation="8">
+      <div class="spacer"></div>
+      <v-avatar v-if="hasAvatar" size="150" class="avatar_moved" :elevation="8">
+        <img :src="avatar_src" alt="Avatar" />
+      </v-avatar>
+      <v-avatar
+        v-if="!hasAvatar"
+        size="150"
+        class="avatar_moved"
+        color="red"
+        :elevation="8"
+      >
+        <span class="white--text headline">
+          {{ value.username.charAt(0) }}
+        </span>
+      </v-avatar>
+      <v-card-title class="justify-center">{{ value.username }}</v-card-title>
+      <v-card-text>{{ value.email }}</v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import { API } from "../../utils/api";
-import Router from "../../router/index";
-import { UserProfileRs,Role } from '../../store/modules/user';
-import {User} from './User'
+import { UserProfileRs, Role } from "../../store/modules/user";
+import { User } from "./User";
 
 @Component
 export default class ProfileCard extends Vue {
-  @Prop({ 
-      type: User, 
-      default: {
-          id: "",
-          email:"",
-          username:"",
-          role:"user"
-      } 
+  @Prop({
+    type: User
   })
-  private user!: User;
-  
-  
-//   async created(){
-//       const resp = await API.get(`posts/${this.post_id}`)
-//       this.post = resp.data as Post;
-//   }
- 
+  private value!: User;
+
+  get avatar_src() {
+    return this.value.getAvatarUrl();
+  }
+
+  get hasAvatar() {
+    return this.value.hasAvatar();
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.user-card {
+  width: 320px;
+}
+.spacer {
+  height: 75px;
+}
+.avatar_moved {
+  position: absolute;
+  top: -75px;
+  left: calc(50% - 75px);
+}
+</style>

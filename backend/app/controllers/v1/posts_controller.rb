@@ -2,24 +2,32 @@ module V1
   class PostsController < ApplicationController
     before_action :set_post,     only: [:show, :update, :destroy]
 
-  # before_action :authorize_access_request!
+    before_action :authorize_access_request!, only: [:create, :update, :destroy]
     ROLES = %w[admin manager user].freeze
  
   # GET /posts
     def index
-      @posts = Post.all
-      render(json: @posts)
+      posts = Post.all.order(created_at: :desc).includes(:user)
+      posts_with_associations = posts.map do |post|
+        post.attributes.merge(
+          'user' => post.user.as_json
+        )
+      end  
+      render(json: posts_with_associations)
     end
 
   # GET /posts/1
     def show
-      render(json: @post)
+      logger.debug @post.user.as_json
+      render json: @post.attributes.merge(
+        'user' => @post.user.as_json
+      )
     end
 
   # POST /posts
     def create
       @post = Post.new(post_params)
-
+      @post.user_id = current_user.id
       if @post.save
         render(        json: @post,         status: :created)
       else
@@ -45,7 +53,7 @@ module V1
 
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.includes(:user).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

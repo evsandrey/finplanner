@@ -3,17 +3,19 @@
     <v-container class="fill-height" fluid>
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
-          <v-card class="elevation-12">
-            <v-toolbar color="primary" dark flat>
-              <v-toolbar-title>Login</v-toolbar-title>
-              <v-spacer />
+          <v-card class="elevation-12 form-signin">
+            <v-toolbar color="primary" dark flat class="justify-center">
+              <v-spacer></v-spacer>
+              <v-toolbar-title class="white--text">Login</v-toolbar-title>
+              <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
               <v-form>
                 <v-text-field
-                  label="Email" 
+                  label="Email"
                   name="email"
                   v-model="email"
+                  :rules="emailRules"
                   prepend-icon="fas fa-user"
                   type="text"
                 />
@@ -24,19 +26,21 @@
                   name="password"
                   v-model="password"
                   prepend-icon="fas fa-lock"
+                  :rules="passwordRules"
                   type="password"
                   v-on:keyup.enter="login"
                 />
               </v-form>
             </v-card-text>
-            <v-card-actions>
+            <v-card-actions class="justify-center">
               <v-btn large block color="primary" @click.prevent="login"
                 >Login</v-btn
               >
             </v-card-actions>
-            <v-card-actions class="justify-center">
-              <v-btn to="/register" text>Register</v-btn>
-            </v-card-actions>
+            <v-card-text>
+              <a href="/forgot_password">Lost you password?</a><br />
+              <a href="/register">Don't have an account?</a>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -48,6 +52,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import user from "../../store/modules/users";
 import Router from "../../router/index";
+import users from "../../store/modules/users";
 
 @Component
 export default class Login extends Vue {
@@ -64,8 +69,24 @@ export default class Login extends Vue {
         Router.push("/");
       })
       .catch(e => {
-        console.error(e); 
+        console.error(e);
       });
+  }
+
+  emailRules: Function[] = [
+    (v: string) => !!v || "E-mail is required",
+    (v: string) => /.+@.+/.test(v) || "E-mail must be valid"
+  ];
+
+  passwordRules: Function[] = [
+    (v: string) => !!v || "Password is required",
+    (v: string) => v.length >= 6 || "Password must be more than 6 characters"
+  ];
+
+  created() {
+    if (users.isAuthenticated) {
+      Router.go(-1);
+    }
   }
 }
 </script>
@@ -87,7 +108,6 @@ export default class Login extends Vue {
 .form-signin {
   width: 100%;
   max-width: 330px;
-  padding: 15px;
   margin: 0 auto;
 }
 .form-signin .checkbox {

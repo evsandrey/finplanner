@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  join_date: 2019-12-04 09:23:19
+  quit_date: 2019-12-04 09:23:19
+  position: MyString
+  company: MyString
+  company_url: MyString
+  description: MyText
+  exp: MyText
+  technologies: MyText
+
+two:
+  join_date: 2019-12-04 09:23:19
+  quit_date: 2019-12-04 09:23:19
+  position: MyString
+  company: MyString
+  company_url: MyString
+  description: MyText
+  exp: MyText
+  technologies: MyText

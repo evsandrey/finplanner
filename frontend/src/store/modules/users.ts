@@ -24,20 +24,20 @@ import { UserProfileRs, UserLoginRq, UserRegisterRq, UserRs } from "./user";
   dynamic: true
 })
 export class UserModule extends VuexModule {
-  profile: UserProfileRs | null = null;
-  token: string | null = localStorage.getItem("token") || null;
-  csrf: string | null = localStorage.getItem("csrf") || null;
+  profile: UserProfileRs | undefined = undefined;
+  token: string | undefined = localStorage.getItem("token") || undefined;
+  csrf: string | undefined = localStorage.getItem("csrf") || undefined;
 
   get isTokenized() {
     return this.token;
   }
 
   get isAuthenticated() {
-    return this.token ? true : false;
+    return this.token && this.profile ? true : false;
   }
 
   get isAdmin() {
-    if (this.profile != null && this.profile.role === "admin") {
+    if (this.profile != undefined && this.profile.role === "admin") {
       return true;
     } else {
       return false;
@@ -50,6 +50,10 @@ export class UserModule extends VuexModule {
 
   get userId() {
     return (this.profile && this.profile.id) || undefined;
+  }
+
+  get avatar() {
+    return (this.profile && this.profile.avatar_url) || undefined;
   }
 
   get profileData() {
@@ -67,7 +71,7 @@ export class UserModule extends VuexModule {
 
   @Mutation
   setAuth(userRs: UserRs) {
-    console.log("setAuth", userRs);
+    // console.log("setAuth", userRs);
     this.profile = userRs.user;
     this.token = userRs.jwt;
     this.csrf = userRs.csrf;
@@ -79,9 +83,9 @@ export class UserModule extends VuexModule {
 
   @Mutation
   dropAuth() {
-    this.profile = null;
-    this.token = null;
-    this.csrf = null;
+    this.profile = undefined;
+    this.token = undefined;
+    this.csrf = undefined;
   }
 
   @Action({ commit: "setAuth" })
@@ -111,6 +115,11 @@ export class UserModule extends VuexModule {
   @Action({ commit: "setProfile" })
   async updateProfile() {
     const UserProfileRs: UserProfileRs | null = await updateUser();
+    return UserProfileRs;
+  }
+
+  @Action({ commit: "setProfile" })
+  async refreshProfile(UserProfileRs: UserProfileRs) {
     return UserProfileRs;
   }
 

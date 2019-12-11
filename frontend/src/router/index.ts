@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { Route } from "vue-router";
 import Home from "../views/Home.vue";
+import About from "../views/About.vue";
 import Login from "../components/user/Login.vue";
 import Register from "../components/user/Register.vue";
 import UsersList from "../components/admin/UsersList.vue";
@@ -14,6 +15,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: About
   },
   {
     path: "/components",
@@ -38,6 +44,17 @@ const routes = [
     component: Register
   },
   {
+    path: "/forgot_password",
+    name: "forgot_password",
+    component: () => import("../components/user/ForgotPassword.vue")
+  },
+  {
+    path: "/update_password/:token",
+    name: "update_password",
+    component: () => import("../components/user/UpdatePassword.vue"),
+    props: true
+  },
+  {
     path: "/post/new",
     name: "newPost",
     meta: { requiresAuth: true, adminAuth: false },
@@ -50,7 +67,13 @@ const routes = [
     props: true
   },
   {
-    path: "/post",
+    path: "/post/:post_id/edit",
+    name: "editPost",
+    component: () => import("../components/post/EditPost.vue"),
+    props: true
+  },
+  {
+    path: "/posts",
     name: "showPosts",
     component: () => import("../components/post/ListPosts.vue"),
     props: true
@@ -60,6 +83,30 @@ const routes = [
     name: "profile",
     meta: { requiresAuth: true, adminAuth: false },
     component: () => import("../components/user/EditProfile.vue"),
+    props: true
+  },
+  {
+    path: "/jobs/new",
+    name: "newJob",
+    meta: { requiresAuth: true, adminAuth: false },
+    component: () => import("../components/job/NewJob.vue")
+  },
+  // {
+  //   path: "/job/:job_id",
+  //   name: "showJob",
+  //   component: () => import("../components/job/ShowJob.vue"),
+  //   props: true
+  // },
+  {
+    path: "/job/:job_id/edit",
+    name: "editJob",
+    component: () => import("../components/job/EditJob.vue"),
+    props: true
+  },
+  {
+    path: "/jobs",
+    name: "showJobs",
+    component: () => import("../components/job/ListJobs.vue"),
     props: true
   }
 ];
@@ -72,7 +119,7 @@ const router = new VueRouter({
 
 router.beforeEach((to: Route, from: any, next: any) => {
   if (to.meta.requiresAuth) {
-    const token = users.isAuthenticated;
+    const token = users.isTokenized;
     if (!token) {
       console.log("tokenFail");
       next("/login");
@@ -85,9 +132,9 @@ router.beforeEach((to: Route, from: any, next: any) => {
           next("/login");
         }
       } else {
-        next();  
+        next();
       }
-      next()
+      next();
     }
   } else {
     next();

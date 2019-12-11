@@ -1,10 +1,11 @@
 <template>
   <v-row>
-  <v-snackbar
+    <v-snackbar
       color="error"
       :top="true"
-      :value="true"  
-      v-for="(error,index) in errors" :key="index"
+      :value="true"
+      v-for="(error, index) in errors"
+      :key="index"
       :timeout="3000"
     >
       {{ error }}
@@ -19,7 +20,7 @@ import errorsholder from "../../store/modules/errorsholder";
 @Component
 export default class ErrorHolder extends Vue {
   get errors() {
-    return errorsholder.errorsList; 
+    return errorsholder.errorsList;
   }
 }
 </script>

@@ -13,4 +13,29 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
+
+  allow do
+    origins 'http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+
+  allow do
+    origins 'https://evsikov.me'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+
+  allow do
+    origins 'https://andrey.evsikov.me'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+
 end

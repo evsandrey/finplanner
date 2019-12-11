@@ -7,23 +7,25 @@ import {
 } from "@/store/modules/user.d.ts";
 import loader from "../store/modules/loader";
 import errorsholder from "../store/modules/errorsholder";
-import users from '@/store/modules/users';
+import users from "../store/modules/users";
+import Router from "../router/index";
 
 const apiUrl =
   process.env.BACK_URL ||
   "http://1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:3000/v1/";
+// const apiUrl =  process.env.BACK_URL ||  "https://andrey.evsikov.me/v1/";
 
 export const API = axios.create({
   baseURL: apiUrl,
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   }
 });
 
 export const plainAxios = axios.create({
   baseURL: apiUrl,
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   }
 });
 
@@ -34,7 +36,7 @@ API.interceptors.request.use(
   },
   function(error) {
     loader.endThread();
-    errorsholder.showError(error)
+    errorsholder.showError(error);
     // Do something with request error
     return Promise.reject(error);
   }
@@ -49,10 +51,19 @@ API.interceptors.response.use(
     return response;
   },
   function(error) {
-    if (error.response && error.response.config && error.response.status === 401) {
+    if (
+      error.response &&
+      error.response.config &&
+      error.response.status === 401
+    ) {
       return plainAxios
-        .post("users/refresh", {}, { headers: { "X-CSRF-TOKEN": localStorage.getItem("csrf")} })
+        .post(
+          "users/refresh",
+          {},
+          { headers: { "X-CSRF-TOKEN": localStorage.getItem("csrf") } }
+        )
         .then(response => {
+          console.log("Starting token refresh");
           users.refresh(response.data);
           // And after successful refresh - repeat the original request
           let retryConfig = error.response.config;
@@ -60,15 +71,21 @@ API.interceptors.response.use(
           return plainAxios.request(retryConfig);
         })
         .catch(error => {
+          console.error("Token refresh failed");
           users.dropAuth();
+          loader.endThread();
           // redirect to signin in case refresh request fails
-          location.replace("/login");
-          return Promise.reject(error);
+          Router.push("/login");
         });
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    errorsholder.showError(error)
+    if (error.response.data.error) {
+      errorsholder.showError(error.response.data.error);
+    } else {
+      errorsholder.showError(error);
+    }
+
     loader.endThread();
     return Promise.reject(error);
   }
@@ -81,7 +98,6 @@ export function setJWT(jwt: string) {
 export function setCSRF(CSRF: string) {
   API.defaults.headers.common["X-CSRF-TOKEN"] = CSRF;
 }
-
 
 export function clearJWT() {
   delete API.defaults.headers.common["Authorization"];
@@ -97,6 +113,30 @@ export async function registerUser(
   try {
     const resp = await API.post("users/signup", user);
     return resp.data as UserRs;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function resetPass(email: string): Promise<any | null> {
+  try {
+    const resp = await API.post("users/reset-password", { email: email });
+    return resp.data;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function updatePass(
+  password: string,
+  token: string
+): Promise<any | null> {
+  try {
+    const resp = await API.post("users/update-password", {
+      password: password,
+      token: token
+    });
+    return resp.data;
   } catch (error) {
     return null;
   }
@@ -119,4 +159,3 @@ export async function updateUser(): Promise<UserProfileRs | null> {
     return null;
   }
 }
-

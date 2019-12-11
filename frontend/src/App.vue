@@ -4,12 +4,8 @@
     <Loader></Loader>
     <ErrorHolder></ErrorHolder>
     <v-content>
-      <v-container fluid>
-        <v-row align="center" justify="top">
-          <v-col cols="12" sm="12" md="8">
-            <router-view></router-view>
-          </v-col>
-        </v-row>
+      <v-container fluid class="pa-0 ma-0">
+        <router-view></router-view>
       </v-container>
     </v-content>
     <Footer></Footer>

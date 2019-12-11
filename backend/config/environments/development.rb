@@ -1,7 +1,18 @@
 Rails.application.configure do
+  
+  # Rails.logger = Logger.new(STDOUT)
+  # config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+  
+  
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.hosts << "1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com"
+  config.hosts << "andrey.evsikov.me"
+  config.hosts << "evsikov.me"
+  
+  Rails.application.routes.default_url_options[:host] = "1a818e70-832b-4c7e-b149-bf3cc68fba1a.pub.cloud.scaleway.com:3000"
+  #Rails.application.routes.default_url_options[:host] = "andrey.evsikov.me"
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -28,6 +39,8 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+
+  # config.active_storage.variant_processor = :vips
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
